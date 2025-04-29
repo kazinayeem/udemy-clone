@@ -1,0 +1,21 @@
+version: '3.9'
+services:
+  server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./server:/app
+    depends_on:
+      - admin-panel
+
+  admin-panel:
+    build:
+      context: .
+      dockerfile: admin-panel/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./admin-panel:/app

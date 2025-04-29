@@ -1,0 +1,146 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String       @id @default(cuid())
+  name       String
+  email      String       @unique
+  password   String
+  image      String?
+  isActive   Boolean      @default(true)
+  role       Role         @default(STUDENT)
+  teacher    Teacher?
+  course     Course[]
+  enrollment Enrollment[]
+  review     Review[]
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+}
+
+enum Role {
+  STUDENT
+  ADMIN
+  TEACHER
+}
+
+model Teacher {
+  id          String   @id @default(cuid())
+  image       String?
+  bio         String?
+  description String?
+  experience  String?
+  education   String?
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String   @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Course      Course[]
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  name      String
+  courses   Course[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CourseItem {
+  id        String   @id @default(cuid())
+  name      String
+  courses   Course[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Course {
+  id           String       @id @default(cuid())
+  title        String
+  description  String?
+  image        String?
+  price        Float
+  duration     Int
+  isPublished  Boolean      @default(false)
+  category     Category?    @relation(fields: [categoryId], references: [id])
+  categoryId   String?
+  lessons      Lesson[]
+  courseItem   CourseItem?  @relation(fields: [courseItemId], references: [id])
+  courseItemId String?
+  level        String?
+  language     String?
+  reviews      Review[]
+  fqa          FQA[]
+  teacher      Teacher?     @relation(fields: [teacherId], references: [id])
+  teacherId    String?
+  user         User?        @relation(fields: [userId], references: [id])
+  userId       String?
+  enrollments  Enrollment[]
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
+model Lesson {
+  id          String       @id @default(cuid())
+  title       String
+  description String?
+  isFree      Boolean      @default(false)
+  isPublished Boolean      @default(false)
+  video       String?
+  course      Course       @relation(fields: [courseId], references: [id])
+  courseId    String
+  attachments Attachment[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Attachment {
+  id        String   @id @default(cuid())
+  name      String
+  url       String
+  lesson    Lesson   @relation(fields: [lessonId], references: [id])
+  lessonId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FQA {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String
+  course    Course   @relation(fields: [courseId], references: [id])
+  courseId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Enrollment {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  course    Course   @relation(fields: [courseId], references: [id])
+  courseId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int
+  comment   String?
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  course    Course   @relation(fields: [courseId], references: [id])
+  courseId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

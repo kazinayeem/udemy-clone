@@ -1,0 +1,19 @@
+{
+  "name": "udemy-clone",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev:admin\" \"npm run dev:server\"",
+    "dev:admin": "cd admin-panel && npm run dev",
+    "dev:server": "cd server && npm run dev",
+    "build": "concurrently \"npm run build:admin\" \"npm run build:server\"",
+    "build:admin": "cd admin-panel && npm run build",
+    "build:server": "cd server && npm run build",
+    "start": "concurrently \"npm run start:admin\" \"npm run start:server\"",
+    "start:admin": "cd admin-panel && npm start",
+    "start:server": "cd server && npm start"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
