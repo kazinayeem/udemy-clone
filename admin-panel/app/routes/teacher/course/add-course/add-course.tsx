@@ -18,9 +18,13 @@ export default function AddCourse() {
 
     try {
       const res = await addCourse({ title: courseName }).unwrap();
-      setCourseName("");
-      navigate(`/teacher/course/course-details/${res.id}`);
-      toast.success("Course added successfully!");
+      if (res) {
+        setCourseName("");
+        navigate(`/teacher/course/course-details/${res.id}`);
+        toast.success("Course added successfully!");
+      } else {
+        toast.error("Failed to add course. Please try again.");
+      }
     } catch (err) {
       console.error("Failed to add course:", err);
       if (error) {

@@ -10,11 +10,11 @@ import { Menu } from "lucide-react";
 export default function MobileNavbar() {
   return (
     <Sheet>
-      <div className="flex flex-col items-center justify-between bg-white border-b p-4 shadow-md">
+      {/* <div >
         <SheetTrigger className="md:hidden w-full pr-4 hover:opacity-75 transition">
           <Menu />
         </SheetTrigger>
-      </div>
+      </div> */}
 
       <SheetContent className="w-[300px] sm:w-[440px]" side="left">
         <SheetHeader>

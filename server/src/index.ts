@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import db from "../config/db";
 import userRoutes from "../routes/user.routes";
 import courseRoutes from "../routes/course.routes";
+import categoryRoutes from "../routes/category.routes";
 const app = express();
 dotenv.config();
 app.use(
@@ -22,6 +23,7 @@ app.use(express.static("uploads"));
 const port = "3000";
 app.use("/api", userRoutes);
 app.use("/api", courseRoutes);
+app.use("/api/category", categoryRoutes);
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
   console.log("Response sent");

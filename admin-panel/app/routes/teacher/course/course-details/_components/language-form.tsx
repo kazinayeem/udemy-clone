@@ -1,63 +1,57 @@
-import { useEffect, useState } from "react";
 import { Pencil } from "lucide-react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { Button } from "~/components/ui/button";
 import {
   Select,
   SelectTrigger,
+  SelectValue,
   SelectContent,
   SelectItem,
-  SelectValue,
 } from "~/components/ui/select";
 import { useUpdateCourseMutation } from "~/redux/api/courseApi";
 
-interface Category {
-  id: string;
-  name: string;
+interface LanguageFormProps {
+  courseid: string;
+  language: string;
 }
 
-interface CategoryFormProps {
-  productId: string;
-  categoryId: string | null;
-}
+const commonLanguages = [
+  "English",
+  "Spanish",
+  "Hindi",
+  "Mandarin",
+  "French",
+  "Arabic",
+  "Portuguese",
+  "Russian",
+  "German",
+  "Japanese",
+  "Korean",
+  "Italian",
+  "Bengali",
+  "Urdu",
+  "Turkish",
+  "Vietnamese",
+];
 
-export default function CategoryForm({
-  productId,
-  categoryId,
-}: CategoryFormProps) {
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [selectedId, setSelectedId] = useState<string | undefined>(
-    categoryId ?? undefined
-  );
+export default function LanguageForm({
+  courseid,
+  language: propsLanguage,
+}: LanguageFormProps) {
   const [isEditing, setIsEditing] = useState(false);
+  const [language, setLanguage] = useState(propsLanguage);
 
   const [updateCourse, { isLoading }] = useUpdateCourseMutation();
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const res = await fetch("http://localhost:3000/api/category");
-        const data = await res.json();
-        setCategories(data);
-      } catch (error) {
-        toast.error("Failed to load categories");
-        console.error("Category fetch error:", error);
-      }
-    };
-
-    fetchCategories();
-  }, []);
-
-  const currentCategory = categories.find((cat) => cat.id === selectedId);
-
   const handleSave = async () => {
-    if (selectedId !== categoryId && selectedId) {
+    if (language !== propsLanguage) {
       try {
-        await updateCourse({ id: productId, categoryId: selectedId }).unwrap();
-        toast.success("Category updated successfully!");
+        await updateCourse({ id: courseid, language }).unwrap();
         setIsEditing(false);
+        toast.success("Language updated successfully!");
       } catch (error) {
-        toast.error("Failed to update category");
+        toast.error("Failed to update language.");
         console.error("Update error:", error);
       }
     } else {
@@ -73,25 +67,21 @@ export default function CategoryForm({
             className="text-lg font-semibold cursor-pointer"
             onDoubleClick={() => setIsEditing(true)}
           >
-            Category: {currentCategory?.name || "Not selected"}
+            Language: {language}
             <span className="text-sm text-gray-500">
               {" "}
               (double-click to edit)
             </span>
           </p>
         ) : (
-          <Select
-            value={selectedId}
-            onValueChange={(val) => setSelectedId(val)}
-            disabled={isLoading}
-          >
+          <Select value={language} onValueChange={(val) => setLanguage(val)}>
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select a category" />
+              <SelectValue placeholder="Select language" />
             </SelectTrigger>
             <SelectContent>
-              {categories.map((cat) => (
-                <SelectItem key={cat.id} value={cat.id}>
-                  {cat.name}
+              {commonLanguages.map((lang) => (
+                <SelectItem key={lang} value={lang}>
+                  {lang}
                 </SelectItem>
               ))}
             </SelectContent>

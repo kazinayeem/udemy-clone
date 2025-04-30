@@ -53,6 +53,6 @@ export const teacherRoutes = [
   {
     label: "Settings",
     icon: <Settings size={18} />,
-    link: "/settings",
+    link: "/teacher/settings",
   },
 ];

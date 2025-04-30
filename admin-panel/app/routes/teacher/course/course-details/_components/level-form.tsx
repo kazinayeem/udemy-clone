@@ -2,33 +2,39 @@ import { Pencil } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Button } from "~/components/ui/button";
-import { Input } from "~/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
 import { useUpdateCourseMutation } from "~/redux/api/courseApi";
 
-interface PriceFormProps {
-  userid: string;
+interface LevelFormProps {
   courseid: string;
-  price: number;
+  level: string;
 }
 
-export default function PriceForm({
-  userid,
+const levels = ["Beginner", "Intermediate", "Advanced", "Expert"];
+
+export default function LevelForm({
   courseid,
-  price: propsPrice,
-}: PriceFormProps) {
+  level: propsLevel,
+}: LevelFormProps) {
   const [isEditing, setIsEditing] = useState(false);
-  const [price, setPrice] = useState<number>(propsPrice);
+  const [level, setLevel] = useState(propsLevel);
 
   const [updateCourse, { isLoading }] = useUpdateCourseMutation();
 
   const handleSave = async () => {
-    if (price !== propsPrice) {
+    if (level !== propsLevel) {
       try {
-        await updateCourse({ id: courseid, price }).unwrap();
+        await updateCourse({ id: courseid, level }).unwrap();
         setIsEditing(false);
-        toast.success("Course price updated successfully!");
+        toast.success("Course level updated successfully!");
       } catch (error) {
-        toast.error("Failed to update course price.");
+        toast.error("Failed to update course level.");
         console.error("Error updating course:", error);
       }
     } else {
@@ -38,32 +44,35 @@ export default function PriceForm({
 
   return (
     <div className="flex items-center justify-between container mx-auto p-4 bg-white shadow-md rounded-lg">
-      <div>
+      <div className="w-full">
         {!isEditing ? (
           <p
             className="text-lg font-semibold cursor-pointer"
             onDoubleClick={() => setIsEditing(true)}
           >
-            {price && price > 0
-              ? `$${price.toFixed(2)} USD`
-              : "Set Course Price"}
-
+            Level: {level}
             <span className="text-sm text-gray-500">
               {" "}
               (double-click to edit)
             </span>
           </p>
         ) : (
-          <Input
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(parseFloat(e.target.value))}
-            placeholder="Course Price"
-            className="w-full"
-          />
+          <Select value={level} onValueChange={(value) => setLevel(value)}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select level" />
+            </SelectTrigger>
+            <SelectContent>
+              {levels.map((lvl) => (
+                <SelectItem key={lvl} value={lvl}>
+                  {lvl}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         )}
       </div>
 
+      {/* Edit/Save button */}
       <Button
         onClick={() => (isEditing ? handleSave() : setIsEditing(true))}
         className="ml-4"
@@ -73,7 +82,7 @@ export default function PriceForm({
         <Pencil className="ml-2" size={16} />
       </Button>
 
-      {isLoading && <p className="text-sm text-gray-500 ml-2">Saving...</p>}
+      {isLoading && <p className="text-sm text-gray-500 mt-2">Saving...</p>}
     </div>
   );
 }

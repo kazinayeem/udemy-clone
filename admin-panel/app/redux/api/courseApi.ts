@@ -34,7 +34,7 @@ export const courseApi = createApi({
     updateCourse: builder.mutation({
       query: ({ id, ...patch }) => ({
         url: `/${id}`,
-        method: "PATCH",
+        method: "PUT",
         body: patch,
       }),
       invalidatesTags: ["Course"],
@@ -46,4 +46,5 @@ export const {
   useAddCourseMutation,
   useGetCoursesQuery,
   useGetCourseByIdQuery,
+  useUpdateCourseMutation,
 } = courseApi;

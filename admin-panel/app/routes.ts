@@ -29,6 +29,10 @@ export default [
         "/course/course-details/:courseId",
         "routes/teacher/course/course-details/course-details.tsx"
       ),
+      route(
+        "/course/show-courses",
+        "routes/teacher/course/show-course/all-course.tsx"
+      ),
       route("*", "routes/teacher/not-found.tsx"),
     ]),
   ]),
