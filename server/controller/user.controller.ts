@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { user } from "../config/db";
+import { course, enrollment, user } from "../config/db";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 export const getAllUsers = async (
@@ -103,18 +103,15 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
 };
 export const getUser = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { id } = req.params;
-    const userId = parseInt(id, 10);
-    if (isNaN(userId)) {
-      res.status(400).json({ message: "Invalid user ID" });
-      return;
-    }
+    const userId = req.user?.id as string;
     const userData = await user.findUnique({
       where: { id: userId.toString() },
       include: {
         course: true,
         enrollment: true,
+        review: true,
       },
+      omit: { password: true },
     });
     if (!userData) {
       res.status(404).json({ message: "User not found" });
@@ -131,32 +128,28 @@ export const updateUser = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { id } = req.params;
-    const userId = parseInt(id, 10);
-    if (isNaN(userId)) {
-      res.status(400).json({ message: "Invalid user ID" });
-      return;
-    }
-    const { name, email, password } = req.body;
-    if (!name || !email || !password) {
-      res.status(400).json({ message: "All fields are required" });
-      return;
-    }
+    const userId = req.user?.id as string;
+
     const existingUser = await user.findUnique({
-      where: { id: userId.toString() },
+      where: { id: userId },
     });
+    console.log("existingUser", existingUser);
+
     if (!existingUser) {
-      res.status(404).json({ message: "User not found" });
+      res.status(400).json({ message: "User not found" });
       return;
     }
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+
     const updatedUser = await user.update({
-      where: { id: userId.toString() },
+      where: { id: userId },
       data: {
-        name,
-        email,
-        password: hashedPassword,
+        address: req.body.address,
+        bio: req.body.bio,
+        description: req.body.description,
+        name: req.body.name,
+        email: req.body.email,
+        country: req.body.country,
+        phone: req.body.phone,
       },
     });
     res.status(200).json({
@@ -202,7 +195,9 @@ export const deleteUser = async (
 export const getUserById = async (
   req: Request,
   res: Response
-): Promise<void> => {};
+): Promise<void> => {
+  res.status(200).json({ message: "User by ID" });
+};
 export const bannedUser = async (
   req: Request,
   res: Response
@@ -256,6 +251,69 @@ export const unbannedUser = async (
     res.status(200).json({ message: "User unbanned successfully" });
   } catch (error) {
     console.error("Error unbanning user:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+export const teacherCourse = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const userId = req.user?.id;
+    if (!userId) {
+      res.status(400).json({ message: "User ID is required" });
+      return;
+    }
+    const totalCourses = await course.count({
+      where: { userId: userId },
+    });
+    const totalSellCount = await enrollment.count({
+      where: {
+        course: {
+          userId,
+        },
+      },
+    });
+
+    const totalSellAmount = await enrollment.findMany({
+      where: {
+        course: {
+          userId: userId,
+        },
+      },
+      select: {
+        course: {
+          select: {
+            price: true,
+          },
+        },
+      },
+    });
+    const uniqueStudents = await enrollment.findMany({
+      where: {
+        course: {
+          userId,
+        },
+      },
+      select: {
+        userId: true,
+      },
+      distinct: ["userId"],
+    });
+
+    const totalUniqueStudents = uniqueStudents.length;
+    const totalAmount = totalSellAmount.reduce((sum, enrollment) => {
+      return sum + (enrollment.course?.price || 0);
+    }, 0);
+
+    res.status(200).json({
+      totalCourses,
+      totalSellCount,
+      totalAmount,
+      uniqueStudents: totalUniqueStudents,
+    });
+  } catch (error) {
+    console.error("Error fetching user courses:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };

@@ -39,6 +39,26 @@ export const courseApi = createApi({
       }),
       invalidatesTags: ["Course"],
     }),
+    addLesson: builder.mutation({
+      query: ({ courseId, ...newLesson }) => ({
+        url: `/${courseId}/lessons`,
+        method: "POST",
+        body: newLesson,
+      }),
+      invalidatesTags: ["Course"],
+    }),
+    getLessonByCourseId: builder.query({
+      query: ({ courseId, lessonId }) => `/${courseId}/lessons/${lessonId}`,
+      providesTags: ["Course"],
+    }),
+    updateLessons: builder.mutation({
+      query: ({ courseId, lessonId, ...patch }) => ({
+        url: `/${courseId}/lessons/${lessonId}`,
+        method: "PUT",
+        body: patch,
+      }),
+      invalidatesTags: ["Course"],
+    }),
   }),
 });
 
@@ -47,4 +67,7 @@ export const {
   useGetCoursesQuery,
   useGetCourseByIdQuery,
   useUpdateCourseMutation,
+  useAddLessonMutation,
+  useGetLessonByCourseIdQuery,
+  useUpdateLessonsMutation,
 } = courseApi;

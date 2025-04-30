@@ -20,6 +20,7 @@ export default [
   ...prefix("teacher", [
     layout("routes/teacher/layout.tsx", [
       index("routes/teacher/index.tsx"),
+      route("profile", "routes/teacher/profile/profile.tsx"),
       route("course", "routes/teacher/course.tsx"),
       route(
         "/course/add-course",
@@ -33,6 +34,11 @@ export default [
         "/course/show-courses",
         "routes/teacher/course/show-course/all-course.tsx"
       ),
+      route(
+        "/course/course-details/:courseId/lessons/:lessonId",
+        "routes/teacher/course/lessons/lessons.tsx"
+      ),
+
       route("*", "routes/teacher/not-found.tsx"),
     ]),
   ]),

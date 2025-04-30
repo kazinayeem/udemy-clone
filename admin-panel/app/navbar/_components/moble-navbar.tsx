@@ -6,10 +6,13 @@ import {
 } from "~/components/ui/sheet";
 import Sidebar from "./sidebar";
 import { Menu } from "lucide-react";
-
-export default function MobileNavbar() {
+interface MobileNavbarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+export default function MobileNavbar({ isOpen, onClose }: MobileNavbarProps) {
   return (
-    <Sheet>
+    <Sheet open={isOpen} onOpenChange={onClose}>
       {/* <div >
         <SheetTrigger className="md:hidden w-full pr-4 hover:opacity-75 transition">
           <Menu />

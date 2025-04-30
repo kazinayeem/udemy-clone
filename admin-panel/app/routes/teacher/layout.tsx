@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router";
+import DesktopNavbar from "~/navbar/_components/desktop-navbar";
 import Navbar from "~/navbar/Navbar";
 import { logout, setUser } from "~/redux/reducer/authSlice";
 import { useAppDispatch } from "~/redux/store/store";
@@ -46,9 +47,15 @@ export default function DashboardLayout() {
   }, [dispatch, navigate]);
 
   return (
-    <div className="flex min-h-screen flex-row bg-gray-100">
-      <Navbar />
-      <main className="flex-1 ">
+    <div className="flex min-h-screen flex-row bg-gray-100 relative">
+      {/* Navbar should be on top of everything on mobile */}
+      <div className="z-50">
+        <Navbar />
+      </div>
+
+      {/* Main content behind navbar when opened */}
+      <main className="flex-1 pt-20 md:pt-0 z-0">
+          <DesktopNavbar />
         <Outlet />
       </main>
     </div>

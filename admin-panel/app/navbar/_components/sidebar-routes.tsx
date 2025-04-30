@@ -55,4 +55,14 @@ export const teacherRoutes = [
     icon: <Settings size={18} />,
     link: "/teacher/settings",
   },
+  {
+    label: "Profile",
+    icon: <User size={18} />,
+    link: "/teacher/profile",
+  },
+  {
+    label: "Course Management",
+    icon: <User size={18} />,
+    link: "/teacher/course-management",
+  },
 ];

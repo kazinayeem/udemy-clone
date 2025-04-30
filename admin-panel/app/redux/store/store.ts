@@ -2,13 +2,17 @@ import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import AuthReducer from "../reducer/authSlice";
 import { courseApi } from "../api/courseApi";
+import { userApi } from "../api/userApi";
 const store = configureStore({
   reducer: {
     auth: AuthReducer,
     [courseApi.reducerPath]: courseApi.reducer,
+    [userApi.reducerPath]: userApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(courseApi.middleware),
+    getDefaultMiddleware()
+      .concat(courseApi.middleware)
+      .concat(userApi.middleware),
   devTools: process.env.NODE_ENV !== "production",
 });
 export type AppDispatch = typeof store.dispatch;

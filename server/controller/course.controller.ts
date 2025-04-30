@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
-import { course } from "../config/db";
+import e, { Request, Response } from "express";
+import { course, lesson } from "../config/db";
 
 export const addCourse = async (req: Request, res: Response): Promise<void> => {
   const userId = req.user?.id;
@@ -32,6 +32,7 @@ export const GetCoursebyId = async (
       include: {
         category: true,
         user: true,
+        lessons: true,
       },
     });
 
@@ -46,7 +47,70 @@ export const GetCoursebyId = async (
     res.status(500).json({ message: "Internal server error" });
   }
 };
+export const addLesson = async (
+  req: Request<{ courseId: string }>,
+  res: Response
+): Promise<void> => {
+  const { courseId } = req.params;
 
+  try {
+    const lessonResponse = await lesson.create({
+      data: {
+        ...req.body,
+        courseId: courseId,
+      },
+    });
+
+    res.status(201).json(lessonResponse);
+  } catch (error) {
+    console.error("Error adding lesson:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getLessonByCourseId = async (
+  req: Request<{ courseId: string; lessonId: string }>,
+  res: Response
+): Promise<void> => {
+  const { courseId, lessonId } = req.params;
+
+  try {
+    const lessons = await lesson.findFirst({
+      where: {
+        courseId: courseId,
+        id: lessonId,
+      },
+    });
+
+    res.status(200).json(lessons);
+  } catch (error) {
+    console.error("Error fetching lessons:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+export const updateLessons = async (
+  req: Request<{ courseId: string; lessonId: string }>,
+  res: Response
+): Promise<void> => {
+  const { courseId, lessonId } = req.params;
+
+  try {
+    const lessons = await lesson.update({
+      where: {
+        id: lessonId,
+        courseId: courseId,
+      },
+      data: {
+        ...req.body,
+      },
+    });
+
+    res.status(200).json(lessons);
+  } catch (error) {
+    console.error("Error updating lessons:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 export const updateCourse = async (
   req: Request<{ id: string }>,
   res: Response

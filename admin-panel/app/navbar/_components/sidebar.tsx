@@ -2,10 +2,16 @@ import React from "react";
 import { useLocation } from "react-router";
 import SidebarItem from "./sidebar-item";
 import { adminRoutes, teacherRoutes } from "./sidebar-routes";
+import { Button } from "~/components/ui/button";
+import { useAppDispatch } from "~/redux/store/store";
+import { useNavigate } from "react-router";
+import { logout } from "~/redux/reducer/authSlice";
+import { LogOutIcon } from "lucide-react";
 
 const Sidebar: React.FC = () => {
+  const dispatch = useAppDispatch();
   const location = useLocation();
-
+  const navigate = useNavigate();
   let user = null;
   try {
     const storedUser = localStorage.getItem("user");
@@ -35,6 +41,19 @@ const Sidebar: React.FC = () => {
             active={location.pathname === item.link}
           />
         ))}
+        {/* log out */}
+        <Button
+          variant="default"
+          className="mt-auto"
+          onClick={() => {
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            dispatch(logout());
+            navigate("/login");
+          }}
+        >
+          <LogOutIcon /> Log Out
+        </Button>
       </nav>
     </aside>
   );

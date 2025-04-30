@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { useGetCourseByIdQuery } from "~/redux/api/courseApi";
 import TitleForm from "./_components/title-from";
 import DescriptionForm from "./_components/description-from";
@@ -8,6 +8,7 @@ import ImageUrlForm from "./_components/image-form";
 import LevelForm from "./_components/level-form";
 import LanguageForm from "./_components/language-form";
 import IsPublishedForm from "./_components/published-form";
+import LessonsForm from "./_components/lessons-form";
 
 export default function CourseDetails() {
   const { courseId } = useParams();
@@ -25,6 +26,10 @@ export default function CourseDetails() {
     data?.language,
   ];
 
+  const navigate = useNavigate();
+  const goToLessons = () => {
+    navigate(`/teacher/course/course-details/${courseId}/lessons/${courseId}`);
+  };
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
   const completionText = `${completedFields}/${totalFields}`;
@@ -100,20 +105,24 @@ export default function CourseDetails() {
           currentImageUrl={data?.image as string}
           productId={courseId as string}
         />
+        <LessonsForm
+          courseid={courseId as string}
+          lessons={
+            data?.lessons as Array<{
+              title: string;
+              isFree: boolean;
+              isPublished: boolean;
+              id: string;
+            }>
+          }
+        />
         <IsPublishedForm
           courseid={courseId as string}
           isPublished={data?.isPublished as boolean}
         />
       </div>
 
-      <div className="flex justify-center items-center mt-6">
-        <button
-          disabled={completedFields !== totalFields}
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
-        >
-          Add Course Lesson
-        </button>
-      </div>
+     
     </div>
   );
 }
