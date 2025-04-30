@@ -14,13 +14,16 @@ export default function DashboardLayout() {
 
     if (!token || !user) {
       navigate("/login");
+      dispatch(logout());
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
       return;
     }
 
     try {
       const parsedUser = JSON.parse(user);
 
-      if (parsedUser.role !== "ADMIN") {
+      if (parsedUser.role !== "TEACHER") {
         navigate("/login");
         return;
       }
@@ -34,11 +37,10 @@ export default function DashboardLayout() {
           token,
         })
       );
-    } catch (error) {
+    } catch (err) {
       dispatch(logout());
-       localStorage.removeItem("token");
-       localStorage.removeItem("user");
-      console.error("Failed to parse user from localStorage:", error);
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
       navigate("/login");
     }
   }, [dispatch, navigate]);

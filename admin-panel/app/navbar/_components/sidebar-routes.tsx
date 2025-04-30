@@ -43,12 +43,12 @@ export const teacherRoutes = [
   {
     label: "Teacher Dashboard",
     icon: <Home size={18} />,
-    link: "/teacher/home",
+    link: "/teacher/",
   },
   {
-    label: "My Courses",
+    label: "Add Course",
     icon: <User size={18} />,
-    link: "/teacher/courses",
+    link: "/teacher/add-course",
   },
   {
     label: "Settings",

@@ -27,7 +27,13 @@ export default function LoginPage() {
   const onSubmit = (data: LoginFormInputs) => {
     dispatch(login(data)).then((res) => {
       if (res.meta.requestStatus === "fulfilled") {
-        navigate("/dashboard/home");
+        const role = (res.payload as { user: { role: string } }).user.role;
+        if (role === "ADMIN") {
+          navigate("/dashboard/");
+        }
+        if (role === "TEACHER") {
+          navigate("/teacher/");
+        }
       }
     });
   };

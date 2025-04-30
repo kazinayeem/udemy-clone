@@ -14,6 +14,14 @@ export default [
       index("routes/dashboard/index.tsx"),
       route("home", "routes/dashboard/home.tsx"),
       route("test", "routes/dashboard/test.tsx"),
+      route("*", "routes/dashboard/not-found.tsx"),
+    ]),
+  ]),
+  ...prefix("teacher", [
+    layout("routes/teacher/layout.tsx", [
+      index("routes/teacher/index.tsx"),
+      route("add-course", "routes/teacher/add-course.tsx"),
+      route("*", "routes/teacher/not-found.tsx"),
     ]),
   ]),
   layout("routes/auth/layout.tsx", [
