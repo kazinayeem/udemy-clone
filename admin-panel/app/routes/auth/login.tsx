@@ -111,6 +111,41 @@ export default function LoginPage() {
               Register here
             </Link>
           </div>
+          {/* set email and password */}
+          <Button
+            onClick={() => {
+              // set email and password
+              const emailInput = document.querySelector(
+                'input[type="email"]'
+              ) as HTMLInputElement;
+              const passwordInput = document.querySelector(
+                'input[type="password"]'
+              ) as HTMLInputElement;
+              if (emailInput && passwordInput) {
+                emailInput.value = "kazi@gmail.com";
+                passwordInput.value = "kazi@gmail.com";
+              }
+            }}
+          >
+            ADMIN
+          </Button>
+          <Button
+            onClick={() => {
+              // set email and password
+              const emailInput = document.querySelector(
+                'input[type="email"]'
+              ) as HTMLInputElement;
+              const passwordInput = document.querySelector(
+                'input[type="password"]'
+              ) as HTMLInputElement;
+              if (emailInput && passwordInput) {
+                emailInput.value = "test@gmail.com";
+                passwordInput.value = "test@gmail.com";
+              }
+            }}
+          >
+            TEACHER
+          </Button>
         </Card>
       </div>
     </main>

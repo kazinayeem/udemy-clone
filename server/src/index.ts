@@ -4,9 +4,15 @@ import logger from "morgan";
 import dotenv from "dotenv";
 import db from "../config/db";
 import userRoutes from "../routes/user.routes";
+import courseRoutes from "../routes/course.routes";
 const app = express();
 dotenv.config();
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -15,6 +21,7 @@ app.use(express.static("uploads"));
 
 const port = "3000";
 app.use("/api", userRoutes);
+app.use("/api", courseRoutes);
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
   console.log("Response sent");

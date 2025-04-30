@@ -9,7 +9,6 @@ export const getAllUsers = async (
   try {
     const users = await user.findMany({
       include: {
-        teacher: true,
         course: true,
         enrollment: true,
       },
@@ -83,7 +82,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
     const token = jwt.sign(
       { id: existingUser.id, email: existingUser.email },
       (process.env.JWT_SECRET as string) || "default",
-      { expiresIn: "1h" }
+      { expiresIn: "30day" }
     );
 
     res.status(200).json({
@@ -113,7 +112,6 @@ export const getUser = async (req: Request, res: Response): Promise<void> => {
     const userData = await user.findUnique({
       where: { id: userId.toString() },
       include: {
-        teacher: true,
         course: true,
         enrollment: true,
       },

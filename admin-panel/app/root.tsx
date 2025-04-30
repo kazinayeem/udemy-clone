@@ -6,7 +6,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-
+import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import type { Route } from "./+types/root";
 import "./app.css";
@@ -37,6 +37,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <body>
         <Provider store={store}>
           <main>{children}</main>
+          <Toaster position="top-center" reverseOrder={false} />
         </Provider>
         <ScrollRestoration />
         <Scripts />

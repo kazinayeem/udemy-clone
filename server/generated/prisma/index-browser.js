@@ -122,18 +122,11 @@ exports.Prisma.UserScalarFieldEnum = {
   image: 'image',
   isActive: 'isActive',
   role: 'role',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.TeacherScalarFieldEnum = {
-  id: 'id',
-  image: 'image',
-  bio: 'bio',
   description: 'description',
-  experience: 'experience',
-  education: 'education',
-  userId: 'userId',
+  phone: 'phone',
+  bio: 'bio',
+  address: 'address',
+  country: 'country',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -164,7 +157,6 @@ exports.Prisma.CourseScalarFieldEnum = {
   courseItemId: 'courseItemId',
   level: 'level',
   language: 'language',
-  teacherId: 'teacherId',
   userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -235,7 +227,6 @@ exports.Role = exports.$Enums.Role = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Teacher: 'Teacher',
   Category: 'Category',
   CourseItem: 'CourseItem',
   Course: 'Course',

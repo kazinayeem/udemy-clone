@@ -48,7 +48,7 @@ export const teacherRoutes = [
   {
     label: "Add Course",
     icon: <User size={18} />,
-    link: "/teacher/add-course",
+    link: "/teacher/course",
   },
   {
     label: "Settings",

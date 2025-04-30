@@ -48,7 +48,7 @@ export default function DashboardLayout() {
   return (
     <div className="flex min-h-screen flex-row bg-gray-100">
       <Navbar />
-      <main className="flex-1 p-4">
+      <main className="flex-1 ">
         <Outlet />
       </main>
     </div>

@@ -10,12 +10,14 @@ import {
   getUser,
   updateUser,
 } from "../controller/user.controller";
+import { authenticateUser } from "../middleware/checkActiveuser";
+import { checkAdmin } from "../middleware/checkAdmin";
 
 const router = express.Router();
 
 router.get("/users", getAllUsers);
 router.post("/register", registerUser);
-router.post("/login", loginUser);
+router.post("/login", authenticateUser, loginUser);
 router.get("/user/:id", getUserById);
 router.get("/user", getUser);
 router.put("/user/:id", updateUser);

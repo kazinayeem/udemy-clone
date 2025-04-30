@@ -12,39 +12,29 @@ datasource db {
 }
 
 model User {
-  id         String       @id @default(cuid())
-  name       String
-  email      String       @unique
-  password   String
-  image      String?
-  isActive   Boolean      @default(true)
-  role       Role         @default(STUDENT)
-  teacher    Teacher?
-  course     Course[]
-  enrollment Enrollment[]
-  review     Review[]
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
+  id          String       @id @default(cuid())
+  name        String
+  email       String       @unique
+  password    String
+  image       String?
+  isActive    Boolean      @default(true)
+  role        Role         @default(STUDENT)
+  description String?
+  phone       String?
+  bio         String?
+  address     String?
+  country     String?
+  course      Course[]
+  enrollment  Enrollment[]
+  review      Review[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
 
 enum Role {
   STUDENT
   ADMIN
   TEACHER
-}
-
-model Teacher {
-  id          String   @id @default(cuid())
-  image       String?
-  bio         String?
-  description String?
-  experience  String?
-  education   String?
-  user        User     @relation(fields: [userId], references: [id])
-  userId      String   @unique
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  Course      Course[]
 }
 
 model Category {
@@ -68,8 +58,8 @@ model Course {
   title        String
   description  String?
   image        String?
-  price        Float
-  duration     Int
+  price        Float?
+  duration     Int?
   isPublished  Boolean      @default(false)
   category     Category?    @relation(fields: [categoryId], references: [id])
   categoryId   String?
@@ -80,8 +70,6 @@ model Course {
   language     String?
   reviews      Review[]
   fqa          FQA[]
-  teacher      Teacher?     @relation(fields: [teacherId], references: [id])
-  teacherId    String?
   user         User?        @relation(fields: [userId], references: [id])
   userId       String?
   enrollments  Enrollment[]
