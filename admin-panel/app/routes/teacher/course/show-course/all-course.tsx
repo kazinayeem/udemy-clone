@@ -16,6 +16,7 @@ interface Course {
   title: string;
   price: number;
   isPublished: boolean;
+  approval: boolean;
 }
 export default function AllCourse() {
   const { data: courses, isLoading } = useGetCoursesQuery({});
@@ -43,6 +44,7 @@ export default function AllCourse() {
           <TableRow>
             <TableHead>Title</TableHead>
             <TableHead>Price</TableHead>
+            <TableHead>Approved</TableHead>
             <TableHead>Published</TableHead>
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
@@ -53,6 +55,7 @@ export default function AllCourse() {
             <TableRow key={course.id}>
               <TableCell>{course.title}</TableCell>
               <TableCell>${course.price}</TableCell>
+              <TableCell>{course.approval ? "Yes" : "No"}</TableCell>
               <TableCell>{course.isPublished ? "Yes" : "No"}</TableCell>
               <TableCell className="text-right space-x-2">
                 <Button

@@ -5,10 +5,9 @@ const db = new PrismaClient();
 export const {
   user,
   attachment,
-  teacher,
+  chapter,
   category,
   course,
-  courseItem,
   enrollment,
   fQA,
   lesson,

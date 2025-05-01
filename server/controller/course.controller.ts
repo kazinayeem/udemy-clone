@@ -1,5 +1,5 @@
-import e, { Request, Response } from "express";
-import { course, lesson } from "../config/db";
+import { Request, Response } from "express";
+import { course, lesson, chapter } from "../config/db";
 
 export const addCourse = async (req: Request, res: Response): Promise<void> => {
   const userId = req.user?.id;
@@ -33,6 +33,7 @@ export const GetCoursebyId = async (
         category: true,
         user: true,
         lessons: true,
+        Chapter: true,
       },
     });
 
@@ -44,6 +45,69 @@ export const GetCoursebyId = async (
     res.status(200).json(courseResponse);
   } catch (error) {
     console.error("Error fetching course:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+export const Getchapter = async (
+  req: Request<{ courseId: string }>,
+  res: Response
+): Promise<void> => {
+  const { courseId } = req.params;
+
+  try {
+    const chapters = await chapter.findMany({
+      where: {
+        courseId: courseId,
+      },
+    });
+
+    res.status(200).json(chapters);
+  } catch (error) {
+    console.error("Error fetching chapters:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+export const addChapter = async (
+  req: Request<{ courseId: string }>,
+  res: Response
+): Promise<void> => {
+  const { courseId } = req.params;
+
+  try {
+    const chapterResponse = await chapter.create({
+      data: {
+        ...req.body,
+        courseId: courseId,
+      },
+    });
+
+    res.status(201).json(chapterResponse);
+  } catch (error) {
+    console.error("Error adding chapter:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const updateChapter = async (
+  req: Request<{ courseId: string; chapterId: string }>,
+  res: Response
+): Promise<void> => {
+  const { courseId, chapterId } = req.params;
+
+  try {
+    const chapterResponse = await lesson.update({
+      where: {
+        id: chapterId,
+        courseId: courseId,
+      },
+      data: {
+        ...req.body,
+      },
+    });
+
+    res.status(200).json(chapterResponse);
+  } catch (error) {
+    console.error("Error updating chapter:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };

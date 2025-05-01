@@ -45,26 +45,28 @@ model Category {
   updatedAt DateTime @updatedAt
 }
 
-model CourseItem {
+model Chapter {
   id        String   @id @default(cuid())
-  name      String
-  courses   Course[]
+  title     String
+  course    Course   @relation(fields: [courseId], references: [id])
+  courseId  String
+  lessons   Lesson[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Course {
-  id           String       @id @default(cuid())
-  title        String
-  description  String?
-  image        String?
-  price        Float?
-  duration     Int?
-  isPublished  Boolean      @default(false)
-  category     Category?    @relation(fields: [categoryId], references: [id])
-  categoryId   String?
-  lessons      Lesson[]
-  courseItem   CourseItem?  @relation(fields: [courseItemId], references: [id])
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  image       String?
+  price       Float?
+  duration    Int?
+  isPublished Boolean   @default(false)
+  category    Category? @relation(fields: [categoryId], references: [id])
+  categoryId  String?
+  lessons     Lesson[]
+
   courseItemId String?
   level        String?
   language     String?
@@ -75,6 +77,9 @@ model Course {
   enrollments  Enrollment[]
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
+  chapterid    String?
+  approval    Boolean      @default(false)
+  Chapter Chapter[]
 }
 
 model Lesson {
@@ -89,6 +94,8 @@ model Lesson {
   attachments Attachment[]
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
+  Chapter     Chapter?     @relation(fields: [chapterId], references: [id])
+  chapterId   String?
 }
 
 model Attachment {

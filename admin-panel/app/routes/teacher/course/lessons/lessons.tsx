@@ -5,6 +5,7 @@ import DescriptionForm from "./_components/description-from";
 import IsPublishedForm from "./_components/published-form";
 import IsFreeForm from "./_components/isFree-form";
 import VideoForm from "./_components/video.-form";
+import ChapterForm from "./_components/chapter-form";
 
 export default function Lessons() {
   const { courseId, lessonId } = useParams();
@@ -27,9 +28,10 @@ export default function Lessons() {
       </div>
     );
 
-  const { title, description, isPublished, video, isFree } = data || {};
+  const { title, description, isPublished, video, isFree, chapterId } =
+    data || {};
 
-  const requiredFields = [title, description, isPublished, video, isFree];
+  const requiredFields = [title, description, video, chapterId];
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
   const completionText = `${completedFields}/${totalFields}`;
@@ -52,6 +54,11 @@ export default function Lessons() {
         </Link>
       </div>
       <div className="flex flex-col gap-4  p-6">
+        <ChapterForm
+          lessonId={lessonId as string}
+          courseId={courseId as string}
+          chapterId={data?.chapterId || ""}
+        />
         <TitleForm
           courseid={courseId as string}
           lessonId={lessonId as string}

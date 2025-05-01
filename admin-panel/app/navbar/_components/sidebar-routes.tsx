@@ -1,31 +1,11 @@
 // sidebar-routes.tsx
-import { Home, Settings, User } from "lucide-react";
+import { Home, Settings, Tag, User } from "lucide-react";
 
 export const adminRoutes = [
   {
     label: "Dashboard Home",
     icon: <Home size={18} />,
-    link: "/dashboard/home",
-  },
-  {
-    label: "User Management",
-    icon: <User size={18} />,
-    link: "/dashboard/users",
-  },
-  {
-    label: "Course Management",
-    icon: <User size={18} />,
-    link: "/dashboard/courses",
-  },
-  {
-    label: "Category Management",
-    icon: <User size={18} />,
-    link: "/dashboard/categories",
-  },
-  {
-    label: "Instructor Management",
-    icon: <User size={18} />,
-    link: "/dashboard/instructors",
+    link: "/dashboard",
   },
   {
     label: "Student Management",
@@ -33,9 +13,24 @@ export const adminRoutes = [
     link: "/dashboard/students",
   },
   {
+    label: "Teacher Management",
+    icon: <User size={18} />,
+    link: "/dashboard/teachers",
+  },
+  {
+    label: "Category Management",
+    icon: <Tag size={18} />,
+    link: "/dashboard/categories",
+  },
+  {
+    label: "Course Management",
+    icon: <User size={18} />,
+    link: "/dashboard/course-management",
+  },
+  {
     label: "Settings",
     icon: <Settings size={18} />,
-    link: "/settings",
+    link: "/dashboard/settings",
   },
 ];
 

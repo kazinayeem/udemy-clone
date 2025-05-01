@@ -26,6 +26,7 @@
     "@types/cors": "^2.8.17",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
+    "date-fns": "^4.1.0",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
@@ -38,7 +39,7 @@
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.15.3",
     "prettier": "^3.5.3",
-    "prisma": "^6.6.0",
+    "prisma": "^6.7.0",
     "tsx": "^4.19.3",
     "typescript": "^5.8.3"
   }
