@@ -48,7 +48,7 @@ export default function DashboardLayout() {
     <div className="flex min-h-screen flex-row bg-gray-100">
       <Navbar />
       <main className="flex-1 pt-20 md:pt-0 z-0">
-        <DesktopNavbar/>
+        <DesktopNavbar />
         <Outlet />
       </main>
     </div>
