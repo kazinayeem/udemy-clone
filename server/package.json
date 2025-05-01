@@ -7,7 +7,7 @@
     "dev": "tsx --watch src/index.ts",
     "start": "node dist/src/index.js",
     "build": "tsc",
-    "deploy": "npm run build && npx prisma generate && prisma migrate deploy",
+    "deploy": "npm run build && cd dist && npx prisma generate && prisma migrate deploy",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev --name init",
     "prisma:migrate:reset": "prisma migrate reset --force",
