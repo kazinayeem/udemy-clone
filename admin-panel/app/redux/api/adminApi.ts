@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const studentAndTeacherApi = createApi({
   reducerPath: "studentAndTeacherApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3000/api/teacher",
+    baseUrl: `${import.meta.env.VITE_SERVER_API}/teacher`,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       if (token) {
@@ -118,5 +118,5 @@ export const {
   useGetCourseEnrollmentsQuery,
   useApprovedCourseMutation,
   useUnapprovedCourseMutation,
-  useGetAllCourseQuery
+  useGetAllCourseQuery,
 } = studentAndTeacherApi;

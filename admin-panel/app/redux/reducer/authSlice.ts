@@ -27,7 +27,7 @@ export const login = createAsyncThunk(
   async (credentials: { email: string; password: string }, thunkAPI) => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/login",
+        `${import.meta.env.VITE_SERVER_API}/login`,
         credentials
       );
       localStorage.setItem("token", response.data.user.token);
@@ -47,7 +47,7 @@ export const register = createAsyncThunk(
   async (data: { name: string; email: string; password: string }, thunkAPI) => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/register",
+        `${import.meta.env.VITE_SERVER_API}/register`,
         data
       );
 

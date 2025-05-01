@@ -36,7 +36,7 @@ export default function CategoryForm({
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/category");
+        const res = await fetch(`${import.meta.env.VITE_SERVER_API}/category`);
         const data = await res.json();
         setCategories(data);
       } catch (error) {

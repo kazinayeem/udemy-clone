@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const courseApi = createApi({
   reducerPath: "courseApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3000/api/course",
+    baseUrl: `${import.meta.env.VITE_SERVER_API}/course`,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       if (token) {
