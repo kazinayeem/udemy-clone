@@ -22,9 +22,9 @@ import {
 } from "../controller/teacher.controller";
 import { checkAdmin } from "../middleware/checkAdmin";
 const router = express.Router();
-router.get("/all-course", getAllCourse);
-router.put("/course/approved/:courseId", courseApproved);
-router.put("/course/unapproved/:courseId", courseUnApproved);
+router.get("/all-course", checkAdmin,getAllCourse);
+router.put("/course/approved/:courseId", checkAdmin,courseApproved);
+router.put("/course/unapproved/:courseId",checkAdmin, courseUnApproved);
 router.get("/all-teachers", checkAdmin, getAllTeachers);
 router.get("/all-students", checkAdmin, getAllStudents);
 router.get("/teacher/:id", checkAdmin, getTeacherById);
