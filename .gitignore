@@ -11,3 +11,7 @@ node_modules
 server/node_modules
 /admin-panel/node_modules
 admin-panel/node_modules
+user/node_modules
+/user/node_modules
+/user/.next
+user/next

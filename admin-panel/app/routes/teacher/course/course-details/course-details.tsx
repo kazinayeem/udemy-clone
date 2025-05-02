@@ -9,7 +9,8 @@ import LevelForm from "./_components/level-form";
 import LanguageForm from "./_components/language-form";
 import IsPublishedForm from "./_components/published-form";
 import LessonsForm from "./_components/lessons-form";
-
+import DurationForm from "./_components/duration-form";
+import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 export default function CourseDetails() {
   const { courseId } = useParams();
   const { data, isLoading, isError } = useGetCourseByIdQuery(
@@ -51,8 +52,16 @@ export default function CourseDetails() {
 
   return (
     <div className="p-6">
+      <Link
+        to="/teacher/course/show-courses"
+        className="inline-flex items-center gap-2 px-4 py-2 rounded transition"
+      >
+        {" "}
+        <FiArrowLeft className="text-lg" />
+        <span className="hover:underline">Go Previous page</span>
+      </Link>
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Course Details</h1>
+        <h1 className="text-2xl font-bold ml-6">Course Details</h1>
         <span className="text-lg text-gray-500">{completionText}</span>
       </div>
 
@@ -84,7 +93,7 @@ export default function CourseDetails() {
             />
           </div>
         </div>
-
+        <DurationForm courseid={courseId as string} duration={data?.duration} />
         {/* Language & Level side by side */}
         <div className="flex flex-col md:flex-row gap-4">
           <div className="flex-1">
@@ -121,8 +130,6 @@ export default function CourseDetails() {
           isPublished={data?.isPublished as boolean}
         />
       </div>
-
-     
     </div>
   );
 }

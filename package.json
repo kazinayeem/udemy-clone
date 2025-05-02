@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"npm run dev:admin\" \"npm run dev:server\"",
+    "dev": "concurrently \"npm run dev:admin\" \"npm run dev:server\" \"npm run dev:client\"",
     "dev:admin": "cd admin-panel && npm run dev",
     "dev:server": "cd server && npm run dev",
+    "dev:client": "cd user && npm run dev",
     "build": "concurrently \"npm run build:admin\" \"npm run build:server\"",
     "build:admin": "cd admin-panel && npm run build",
     "build:server": "cd server && npm run build",

@@ -7,11 +7,12 @@ import userRoutes from "../routes/user.routes";
 import courseRoutes from "../routes/course.routes";
 import categoryRoutes from "../routes/category.routes";
 import teacherRoutes from "../routes/teacher.routes";
+import userPartRoutes from "../routes/user-part.routes";
 const app = express();
 dotenv.config();
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "http://localhost:3000"],
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
@@ -21,11 +22,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(express.static("uploads"));
 
-const port = "3000";
+const port = "8080";
 app.use("/api", userRoutes);
 app.use("/api", courseRoutes);
 app.use("/api/category", categoryRoutes);
 app.use("/api/teacher", teacherRoutes);
+app.use("/api/client", userPartRoutes);
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
   console.log("Response sent");
