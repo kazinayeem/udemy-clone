@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { course, lesson, chapter } from "../config/db";
+import { course, lesson, chapter, fQA } from "../config/db";
 
 export const addCourse = async (req: Request, res: Response): Promise<void> => {
   const userId = req.user?.id;
@@ -19,6 +19,130 @@ export const addCourse = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+export const createFeq = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { question, answer } = req.body;
+    const { courseId } = req.params;
+
+    if (!question || !answer || !courseId) {
+      res
+        .status(400)
+        .json({ success: false, message: "All fields are required" });
+      return;
+    }
+
+    const courseExists = await course.findUnique({
+      where: { id: courseId },
+    });
+
+    if (!courseExists) {
+      res.status(404).json({ success: false, message: "Course not found" });
+      return;
+    }
+
+    const newFAQ = await fQA.create({
+      data: {
+        question,
+        answer,
+        courseId,
+      },
+    });
+
+    res.status(201).json({
+      success: true,
+      message: "FAQ created successfully",
+      data: newFAQ,
+    });
+  } catch (error) {
+    console.error("Error creating FAQ:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+export const updateFaq = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { faqId } = req.params;
+    const { question, answer } = req.body;
+
+    const existingFaq = await fQA.findUnique({
+      where: { id: faqId },
+    });
+
+    if (!existingFaq) {
+      res.status(404).json({ success: false, message: "FAQ not found" });
+      return;
+    }
+
+    const updatedFaq = await fQA.update({
+      where: { id: faqId },
+      data: {
+        question,
+        answer,
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "FAQ updated successfully",
+      data: updatedFaq,
+    });
+  } catch (error) {
+    console.error("Error updating FAQ:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+export const deleteFaq = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { faqId } = req.params;
+
+    const existingFaq = await fQA.findUnique({
+      where: { id: faqId },
+    });
+
+    if (!existingFaq) {
+      res.status(404).json({ success: false, message: "FAQ not found" });
+      return;
+    }
+
+    await fQA.delete({
+      where: { id: faqId },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "FAQ deleted successfully",
+    });
+  } catch (error) {
+    console.error("Error deleting FAQ:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+export const getAllFAQs = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const courseId = req.query.courseId as string;
+
+    const faqs = await fQA.findMany({
+      where: courseId ? { courseId } : {},
+      orderBy: { createdAt: "desc" },
+    });
+
+    res.status(200).json({
+      success: true,
+      count: faqs.length,
+      data: faqs,
+    });
+  } catch (error) {
+    console.error("Error fetching FAQs:", error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
+
 export const GetCoursebyId = async (
   req: Request<{ id: string }>,
   res: Response
@@ -33,7 +157,11 @@ export const GetCoursebyId = async (
         category: true,
         user: true,
         lessons: true,
-        Chapter: true,
+        Chapter: {
+          include : {
+            lessons : true
+          }
+        },
       },
     });
 

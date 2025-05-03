@@ -80,6 +80,35 @@ export const courseApi = createApi({
       }),
       invalidatesTags: ["Course"],
     }),
+
+    getFqaById: builder.query({
+      query: (id) => `/${id}/fqa`,
+      providesTags: ["Course"],
+    }),
+    createFqa: builder.mutation({
+      query: ({ courseId, question, answer }) => ({
+        url: `/${courseId}/fqa`,
+        method: "POST",
+        body: { question, answer },
+      }),
+      invalidatesTags: ["Course"],
+    }),
+    updateFaq: builder.mutation({
+      query: ({ faqId, data }) => ({
+        url: `/faq/${faqId}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["Course"],
+    }),
+
+    deleteFaq: builder.mutation({
+      query: (faqId) => ({
+        url: `/faq/${faqId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Course"],
+    }),
   }),
 });
 
@@ -94,4 +123,8 @@ export const {
   useGetChaptersQuery,
   useCreateChapterMutation,
   useUpdateChapterMutation,
+  useGetFqaByIdQuery,
+  useCreateFqaMutation,
+  useDeleteFaqMutation,
+  useUpdateFaqMutation,
 } = courseApi;

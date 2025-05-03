@@ -10,6 +10,7 @@ import { notFound } from "next/navigation";
 import FreePreviewButton from "./_components/FreePreviewButton";
 import { Suspense } from "react";
 import { Lock } from "lucide-react";
+import CourseFAQAccordion from "./_components/CourseFAQ";
 
 export default async function CoursePage({
   params,
@@ -25,6 +26,14 @@ export default async function CoursePage({
 
   if (!res.ok) return notFound();
 
+  interface FAQ {
+    id: string;
+    question: string;
+    answer: string;
+    courseId: string;
+    createdAt: string;
+    updatedAt: string;
+  }
   interface CourseResponse {
     data: {
       image: string;
@@ -32,6 +41,7 @@ export default async function CoursePage({
       price: number;
       duration: number;
       description: string;
+      fqa: FAQ[];
       instructor: {
         name: string;
       };
@@ -51,20 +61,19 @@ export default async function CoursePage({
   const { data }: CourseResponse = await res.json();
 
   return (
-    <div className="bg-gradient-to-b from-cyan-100/70">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 ">
-        {/* Responsive Order: Price card first on small screens */}
-        <div className="grid grid-cols-1 md:grid-cols-3 md:gap-8 gap-6">
-          {/* Right Column - Pricing & Info (shown first on small) */}
-          <div className="order-1 md:order-2 bg-white rounded-lg shadow p-6 border">
+    <div className="bg-gradient-to-b from-cyan-100/70 min-h-screen">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 py-12">
+        {/* Pricing & Course Information */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="order-1 md:order-2 bg-white rounded-lg shadow-lg p-6">
             <Image
               src={data.image}
               alt={data.title}
               width={400}
               height={200}
-              className="rounded-md mb-4 w-full object-cover"
+              className="rounded-md mb-6 w-full object-cover"
             />
-            <p className="text-red-600 text-sm font-medium mb-1">
+            <p className="text-red-600 text-sm font-medium mb-2">
               ⏰ 5 days left at this price!
             </p>
             <div className="flex items-center gap-3 mb-4">
@@ -85,9 +94,9 @@ export default async function CoursePage({
                 lessons
               </span>
             </div>
-            <Button className="w-full mb-4">Enroll Now</Button>
+            <Button className="w-full mb-6">Enroll Now</Button>
 
-            <h3 className="font-semibold text-base mb-2">
+            <h3 className="font-semibold text-lg mb-4">
               What&apos;s in the course?
             </h3>
             <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
@@ -97,22 +106,25 @@ export default async function CoursePage({
             </ul>
           </div>
 
-          {/* Left Column - Course Details & Chapters */}
+          {/* Left Column - Course Details */}
           <div className="order-2 md:order-1 md:col-span-2">
-            <h1 className="text-3xl font-bold mb-2">{data.title}</h1>
-            <p className="text-muted-foreground text-sm mb-4">
-              {data.description}
-            </p>
+            <h1 className="text-3xl font-extrabold mb-4">{data.title}</h1>
+            <p
+              className="text-lg text-gray-800 leading-relaxed mb-8"
+              dangerouslySetInnerHTML={{
+                __html: data?.description || "",
+              }}
+            ></p>
 
-            <div className="flex flex-wrap items-center gap-3 text-sm mb-2 text-muted-foreground">
+            <div className="flex flex-wrap items-center gap-3 text-sm mb-4 text-muted-foreground">
               <span>⭐ 3</span>
               <span>(5 ratings)</span>
               <span>· {11} students</span>
             </div>
 
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm text-muted-foreground mb-6">
               Course by{" "}
-              <span className="text-blue-600 font-medium">
+              <span className="text-blue-600 font-semibold">
                 {data.instructor.name}
               </span>
             </p>
@@ -139,7 +151,7 @@ export default async function CoursePage({
                       chapter.lessons.map((lesson) => (
                         <div
                           key={lesson.id}
-                          className="border rounded-lg p-4 my-3 bg-white shadow-sm hover:bg-gray-100 transition duration-300"
+                          className="py-4 px-5 bg-white rounded-lg shadow-sm mb-4 hover:shadow-md transition duration-300"
                         >
                           <h4 className="text-lg font-semibold text-gray-800">
                             {lesson.title}
@@ -156,7 +168,7 @@ export default async function CoursePage({
                           {lesson.isFree &&
                             lesson.video?.includes("youtube.com") && (
                               <div className="mt-3">
-                                <Suspense fallback={<h1>laoding</h1>}>
+                                <Suspense fallback={<h1>Loading...</h1>}>
                                   <FreePreviewButton videoUrl={lesson.video} />
                                 </Suspense>
                               </div>
@@ -171,6 +183,9 @@ export default async function CoursePage({
           </div>
         </div>
       </div>
+
+      {/* FAQ Section */}
+      <CourseFAQAccordion fqa={data?.fqa} />
     </div>
   );
 }

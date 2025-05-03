@@ -1,16 +1,16 @@
+import { FiArrowLeft } from "react-icons/fi";
 import { Link, useNavigate, useParams } from "react-router";
 import { useGetCourseByIdQuery } from "~/redux/api/courseApi";
-import TitleForm from "./_components/title-from";
-import DescriptionForm from "./_components/description-from";
-import PriceForm from "./_components/price-form";
 import CategoryForm from "./_components/category-form";
-import ImageUrlForm from "./_components/image-form";
-import LevelForm from "./_components/level-form";
-import LanguageForm from "./_components/language-form";
-import IsPublishedForm from "./_components/published-form";
-import LessonsForm from "./_components/lessons-form";
+import ChapterForm from "./_components/chapter-form";
+import DescriptionForm from "./_components/description-from";
 import DurationForm from "./_components/duration-form";
-import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
+import ImageUrlForm from "./_components/image-form";
+import LanguageForm from "./_components/language-form";
+import LevelForm from "./_components/level-form";
+import PriceForm from "./_components/price-form";
+import IsPublishedForm from "./_components/published-form";
+import TitleForm from "./_components/title-from";
 export default function CourseDetails() {
   const { courseId } = useParams();
   const { data, isLoading, isError } = useGetCourseByIdQuery(
@@ -56,12 +56,14 @@ export default function CourseDetails() {
         to="/teacher/course/show-courses"
         className="inline-flex items-center gap-2 px-4 py-2 rounded transition"
       >
-        {" "}
         <FiArrowLeft className="text-lg" />
         <span className="hover:underline">Go Previous page</span>
       </Link>
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold ml-6">Course Details</h1>
+        <Link to={`/teacher/course/course-details/${courseId}/fqa/`}>
+          Add FQA
+        </Link>
         <span className="text-lg text-gray-500">{completionText}</span>
       </div>
 
@@ -114,17 +116,8 @@ export default function CourseDetails() {
           currentImageUrl={data?.image as string}
           productId={courseId as string}
         />
-        <LessonsForm
-          courseid={courseId as string}
-          lessons={
-            data?.lessons as Array<{
-              title: string;
-              isFree: boolean;
-              isPublished: boolean;
-              id: string;
-            }>
-          }
-        />
+        <ChapterForm chapters={data.Chapter} courseId={courseId as string} />
+
         <IsPublishedForm
           courseid={courseId as string}
           isPublished={data?.isPublished as boolean}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Pencil } from "lucide-react";
 import toast from "react-hot-toast";
 import { Button } from "~/components/ui/button";
@@ -16,6 +16,13 @@ export default function DescriptionForm({
   description: propsDescription,
 }: DescriptionFormProps) {
   const [isEditing, setIsEditing] = useState(false);
+  const [ReactQuill, setReactQuill] = useState<any>(null);
+  useEffect(() => {
+    import("react-quill-new").then((mod) => {
+      import("react-quill-new/dist/quill.snow.css");
+      setReactQuill(() => mod.default);
+    });
+  }, []);
   const [description, setDescription] = useState(propsDescription);
   const [updateLessons, { isError, isLoading, isSuccess }] =
     useUpdateLessonsMutation();
@@ -40,19 +47,20 @@ export default function DescriptionForm({
   return (
     <div className="flex flex-col gap-4 container mx-auto p-4 bg-white shadow-md rounded-lg">
       {!isEditing ? (
-        <p
-          className=" text-lg font-semibold leading-relaxed cursor-pointer whitespace-pre-wrap"
-          onDoubleClick={() => setIsEditing(true)}
-        >
-          {description}
+        <>
+          <p
+            className=" text-lg font-semibold leading-relaxed cursor-pointer whitespace-pre-wrap"
+            onDoubleClick={() => setIsEditing(true)}
+            dangerouslySetInnerHTML={{ __html: description }}
+          />
           <span className="text-sm text-gray-500"> (double-click to edit)</span>
-        </p>
+        </>
       ) : (
-        <textarea
+        <ReactQuill
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="w-full h-48 p-2 border rounded resize-none"
-          placeholder="Edit course description..."
+          onChange={setDescription}
+          className="w-full bg-white"
+          theme="snow"
         />
       )}
 

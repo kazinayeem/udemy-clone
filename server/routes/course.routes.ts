@@ -3,12 +3,16 @@ import {
   addChapter,
   addCourse,
   addLesson,
+  createFeq,
+  deleteFaq,
+  getAllFAQs,
   Getchapter,
   GetCoursebyId,
   getCourseByUserId,
   getLessonByCourseId,
   updateChapter,
   updateCourse,
+  updateFaq,
   updateLessons,
 } from "../controller/course.controller";
 import { checkLogin } from "../middleware/checkLogin";
@@ -31,5 +35,9 @@ router.put("/course/:courseId/lessons/:lessonId", checkLogin, updateLessons);
 router.post("/course/:courseId/chapters/", checkLogin, addChapter);
 router.get("/course/:courseId/chapters", checkLogin, Getchapter);
 router.put("/course/:courseId/chapters/:chapterId", checkLogin, updateChapter);
+router.get("/course/:courseId/fqa", getAllFAQs);
+router.post("/course/:courseId/fqa", createFeq);
+router.put("/course/faq/:faqId", updateFaq);
+router.delete("/course/faq/:faqId", deleteFaq);
 
 export default router;

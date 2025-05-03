@@ -42,7 +42,10 @@ export default [
         "/course/course-details/:courseId/lessons/:lessonId",
         "routes/teacher/course/lessons/lessons.tsx"
       ),
-
+      route(
+        "/course/course-details/:courseId/fqa",
+        "routes/teacher/course/fqa/index.tsx"
+      ),
       route("*", "routes/teacher/not-found.tsx"),
     ]),
   ]),

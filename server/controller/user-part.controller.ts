@@ -9,20 +9,33 @@ export const getAllCourse = async (
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 10;
     const skip = (page - 1) * limit;
+    const search = (req.query.search as string)?.trim() || "";
+
+    const searchFilter = search
+      ? {
+          title: {
+            contains: search,
+            mode: "insensitive",
+          },
+        }
+      : {};
+
+    const commonWhere = {
+      isPublished: true,
+      approval: true,
+      ...searchFilter,
+    };
 
     const [courses, total] = await Promise.all([
       course.findMany({
-        where: {
-          isPublished: true,
-          approval: true,
-        },
+        where: commonWhere,
         select: {
+          id: true,
           title: true,
           category: true,
           image: true,
           price: true,
           reviews: true,
-          id: true,
           duration: true,
           user: {
             select: {
@@ -34,10 +47,7 @@ export const getAllCourse = async (
         take: limit,
       }),
       course.count({
-        where: {
-          isPublished: true,
-          approval: true,
-        },
+        where: commonWhere,
       }),
     ]);
 
@@ -59,6 +69,7 @@ export const getAllCourse = async (
     });
   }
 };
+
 export const getCourseDetailsById = async (
   req: Request,
   res: Response
@@ -81,7 +92,11 @@ export const getCourseDetailsById = async (
         fqa: true,
         Chapter: {
           include: {
-            lessons: true,
+            lessons: {
+              where: {
+                isPublished: true,
+              },
+            },
           },
         },
         enrollments: true,
