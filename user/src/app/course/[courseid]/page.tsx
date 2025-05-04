@@ -18,7 +18,7 @@ export default async function CoursePage({
   params: Promise<{ courseid: string }>;
 }) {
   const res = await fetch(
-    `http://localhost:8080/api/client/course/${(await params).courseid}`,
+    `${process.env.SERVER}/client/course/${(await params).courseid}`,
     {
       cache: "no-store",
     }

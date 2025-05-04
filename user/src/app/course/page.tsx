@@ -28,7 +28,7 @@ const CoursePage = () => {
       setLoading(true);
       try {
         const res = await fetch(
-          `http://localhost:8080/api/client/courses?page=${page}&limit=10`
+          `${process.env.SERVER}/client/courses?page=${page}&limit=10`
         );
         const data = await res.json();
 
