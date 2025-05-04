@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import { category, course } from "../config/db";
+import { Prisma } from "../generated/prisma";
 
 export const getAllCourse = async (
   req: Request,
@@ -11,7 +12,8 @@ export const getAllCourse = async (
     const skip = (page - 1) * limit;
     const search = (req.query.search as string)?.trim() || "";
 
-    const searchFilter = search
+    // Filter for title search
+    const searchFilter: Prisma.CourseWhereInput = search
       ? {
           title: {
             contains: search,
@@ -20,7 +22,7 @@ export const getAllCourse = async (
         }
       : {};
 
-    const commonWhere = {
+    const commonWhere: Prisma.CourseWhereInput = {
       isPublished: true,
       approval: true,
       ...searchFilter,

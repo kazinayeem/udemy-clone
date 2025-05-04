@@ -30,6 +30,7 @@ export default function RootLayout({
       className="[&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
     >
       <body
+       
         className={`${geistSans.variable} ${geistMono.variable} antialiased scrollbar-hide overflow-y-scroll h-screen`}
       >
         <Navbar />

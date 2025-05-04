@@ -12,10 +12,11 @@ const user_routes_1 = __importDefault(require("../routes/user.routes"));
 const course_routes_1 = __importDefault(require("../routes/course.routes"));
 const category_routes_1 = __importDefault(require("../routes/category.routes"));
 const teacher_routes_1 = __importDefault(require("../routes/teacher.routes"));
+const user_part_routes_1 = __importDefault(require("../routes/user-part.routes"));
 const app = (0, express_1.default)();
 dotenv_1.default.config();
 app.use((0, cors_1.default)({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "http://localhost:3000"],
     methods: ["GET", "POST", "PUT", "DELETE"],
 }));
 app.use((0, morgan_1.default)("dev"));
@@ -23,11 +24,12 @@ app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.static("public"));
 app.use(express_1.default.static("uploads"));
-const port = "3000";
+const port = "8080";
 app.use("/api", user_routes_1.default);
 app.use("/api", course_routes_1.default);
 app.use("/api/category", category_routes_1.default);
 app.use("/api/teacher", teacher_routes_1.default);
+app.use("/api/client", user_part_routes_1.default);
 app.get("/", (req, res) => {
     res.send("Hello World!");
     console.log("Response sent");

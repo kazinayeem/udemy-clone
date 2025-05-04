@@ -19,4 +19,8 @@ router.put("/course/:courseId/lessons/:lessonId", checkLogin_1.checkLogin, cours
 router.post("/course/:courseId/chapters/", checkLogin_1.checkLogin, course_controller_1.addChapter);
 router.get("/course/:courseId/chapters", checkLogin_1.checkLogin, course_controller_1.Getchapter);
 router.put("/course/:courseId/chapters/:chapterId", checkLogin_1.checkLogin, course_controller_1.updateChapter);
+router.get("/course/:courseId/fqa", course_controller_1.getAllFAQs);
+router.post("/course/:courseId/fqa", course_controller_1.createFeq);
+router.put("/course/faq/:faqId", course_controller_1.updateFaq);
+router.delete("/course/faq/:faqId", course_controller_1.deleteFaq);
 exports.default = router;

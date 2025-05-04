@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getCourseByUserId = exports.updateCourse = exports.updateLessons = exports.getLessonByCourseId = exports.addLesson = exports.updateChapter = exports.addChapter = exports.Getchapter = exports.GetCoursebyId = exports.addCourse = void 0;
+exports.getCourseByUserId = exports.updateCourse = exports.updateLessons = exports.getLessonByCourseId = exports.addLesson = exports.updateChapter = exports.addChapter = exports.Getchapter = exports.GetCoursebyId = exports.getAllFAQs = exports.deleteFaq = exports.updateFaq = exports.createFeq = exports.addCourse = void 0;
 const db_1 = require("../config/db");
 const addCourse = async (req, res) => {
     const userId = req.user?.id;
@@ -19,6 +19,118 @@ const addCourse = async (req, res) => {
     }
 };
 exports.addCourse = addCourse;
+const createFeq = async (req, res) => {
+    try {
+        const { question, answer } = req.body;
+        const { courseId } = req.params;
+        if (!question || !answer || !courseId) {
+            res
+                .status(400)
+                .json({ success: false, message: "All fields are required" });
+            return;
+        }
+        const courseExists = await db_1.course.findUnique({
+            where: { id: courseId },
+        });
+        if (!courseExists) {
+            res.status(404).json({ success: false, message: "Course not found" });
+            return;
+        }
+        const newFAQ = await db_1.fQA.create({
+            data: {
+                question,
+                answer,
+                courseId,
+            },
+        });
+        res.status(201).json({
+            success: true,
+            message: "FAQ created successfully",
+            data: newFAQ,
+        });
+    }
+    catch (error) {
+        console.error("Error creating FAQ:", error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+exports.createFeq = createFeq;
+const updateFaq = async (req, res) => {
+    try {
+        const { faqId } = req.params;
+        const { question, answer } = req.body;
+        const existingFaq = await db_1.fQA.findUnique({
+            where: { id: faqId },
+        });
+        if (!existingFaq) {
+            res.status(404).json({ success: false, message: "FAQ not found" });
+            return;
+        }
+        const updatedFaq = await db_1.fQA.update({
+            where: { id: faqId },
+            data: {
+                question,
+                answer,
+            },
+        });
+        res.status(200).json({
+            success: true,
+            message: "FAQ updated successfully",
+            data: updatedFaq,
+        });
+    }
+    catch (error) {
+        console.error("Error updating FAQ:", error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+exports.updateFaq = updateFaq;
+const deleteFaq = async (req, res) => {
+    try {
+        const { faqId } = req.params;
+        const existingFaq = await db_1.fQA.findUnique({
+            where: { id: faqId },
+        });
+        if (!existingFaq) {
+            res.status(404).json({ success: false, message: "FAQ not found" });
+            return;
+        }
+        await db_1.fQA.delete({
+            where: { id: faqId },
+        });
+        res.status(200).json({
+            success: true,
+            message: "FAQ deleted successfully",
+        });
+    }
+    catch (error) {
+        console.error("Error deleting FAQ:", error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+exports.deleteFaq = deleteFaq;
+const getAllFAQs = async (req, res) => {
+    try {
+        const courseId = req.query.courseId;
+        const faqs = await db_1.fQA.findMany({
+            where: courseId ? { courseId } : {},
+            orderBy: { createdAt: "desc" },
+        });
+        res.status(200).json({
+            success: true,
+            count: faqs.length,
+            data: faqs,
+        });
+    }
+    catch (error) {
+        console.error("Error fetching FAQs:", error);
+        res.status(500).json({
+            success: false,
+            message: "Internal server error",
+        });
+    }
+};
+exports.getAllFAQs = getAllFAQs;
 const GetCoursebyId = async (req, res) => {
     const { id } = req.params;
     try {
@@ -30,7 +142,11 @@ const GetCoursebyId = async (req, res) => {
                 category: true,
                 user: true,
                 lessons: true,
-                Chapter: true,
+                Chapter: {
+                    include: {
+                        lessons: true
+                    }
+                },
             },
         });
         if (!courseResponse) {
