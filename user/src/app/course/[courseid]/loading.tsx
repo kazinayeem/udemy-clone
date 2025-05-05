@@ -1,9 +1,7 @@
-import HomePageCourse from "@/components/product/HomePageCourse";
-import SearchSection from "@/components/product/SearchSection";
-import TestimonialsSection from "@/components/product/TestimonialsSection";
+import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Suspense } from "react";
-function LoadingCards() {
+
+export default function Loading() {
   return (
     <div className="container mx-auto max-w-screen-xl px-8 py-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       {[...Array(3)].map((_, index) => (
@@ -15,18 +13,6 @@ function LoadingCards() {
           <Skeleton className="h-8 w-24" />
         </div>
       ))}
-    </div>
-  );
-}
-export default function Home() {
-  return (
-    <div>
-      <SearchSection />
-      <Suspense fallback={<LoadingCards />}>
-        <HomePageCourse />
-      </Suspense>
-
-      <TestimonialsSection />
     </div>
   );
 }

@@ -1,62 +1,158 @@
+"use client";
+
 import React from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 
+const loginSchema = z.object({
+  email: z.string().email("Invalid email"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+});
+
+const registerSchema = z.object({
+  name: z.string().min(2, "Name is required"),
+  email: z.string().email("Invalid email"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+});
+
+type LoginType = z.infer<typeof loginSchema>;
+type RegisterType = z.infer<typeof registerSchema>;
+
 export default function AuthPage() {
+  const loginForm = useForm<LoginType>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: { email: "", password: "" },
+  });
+
+  const registerForm = useForm<RegisterType>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: { name: "", email: "", password: "" },
+  });
+
+  const handleLogin = async (data: LoginType) => {
+    console.log("Logging in with:", data);
+    alert(`Welcome back, ${data.email}`);
+  };
+
+  const handleRegister = async (data: RegisterType) => {
+    console.log("Registering:", data);
+    alert(`Account created for ${data.name}`);
+  };
+
   return (
-    <div className="w-full flex justify-center mt-10">
-      <Tabs defaultValue="login" className="w-[400px]">
-        <TabsList className="w-full grid grid-cols-2">
+    <div className="w-full flex justify-center mt-10 px-4">
+      <Tabs
+        defaultValue="login"
+        className="w-full max-w-md bg-white shadow-xl rounded-xl p-6 border"
+      >
+        <TabsList className="w-full grid grid-cols-2 mb-6">
           <TabsTrigger value="login">Login</TabsTrigger>
           <TabsTrigger value="register">Register</TabsTrigger>
         </TabsList>
 
         {/* Login Form */}
-        <TabsContent value="login" className="mt-6 space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="login-email">Email</Label>
-            <Input
-              id="login-email"
-              type="email"
-              placeholder="you@example.com"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="login-password">Password</Label>
-            <Input id="login-password" type="password" placeholder="••••••••" />
-          </div>
-          <Button className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white">
-            Login
-          </Button>
+        <TabsContent value="login">
+          <form
+            onSubmit={loginForm.handleSubmit(handleLogin)}
+            className="space-y-4"
+          >
+            <div>
+              <Label htmlFor="login-email">Email</Label>
+              <Input
+                id="login-email"
+                type="email"
+                {...loginForm.register("email")}
+              />
+              {loginForm.formState.errors.email && (
+                <p className="text-sm text-red-500">
+                  {loginForm.formState.errors.email.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <Label htmlFor="login-password">Password</Label>
+              <Input
+                id="login-password"
+                type="password"
+                {...loginForm.register("password")}
+              />
+              {loginForm.formState.errors.password && (
+                <p className="text-sm text-red-500">
+                  {loginForm.formState.errors.password.message}
+                </p>
+              )}
+            </div>
+
+            <Button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+            >
+              Login
+            </Button>
+          </form>
         </TabsContent>
 
         {/* Register Form */}
-        <TabsContent value="register" className="mt-6 space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="register-name">Name</Label>
-            <Input id="register-name" type="text" placeholder="Your Name" />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="register-email">Email</Label>
-            <Input
-              id="register-email"
-              type="email"
-              placeholder="you@example.com"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="register-password">Password</Label>
-            <Input
-              id="register-password"
-              type="password"
-              placeholder="••••••••"
-            />
-          </div>
-          <Button className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white">
-            Register
-          </Button>
+        <TabsContent value="register">
+          <form
+            onSubmit={registerForm.handleSubmit(handleRegister)}
+            className="space-y-4"
+          >
+            <div>
+              <Label htmlFor="register-name">Name</Label>
+              <Input
+                id="register-name"
+                type="text"
+                {...registerForm.register("name")}
+              />
+              {registerForm.formState.errors.name && (
+                <p className="text-sm text-red-500">
+                  {registerForm.formState.errors.name.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <Label htmlFor="register-email">Email</Label>
+              <Input
+                id="register-email"
+                type="email"
+                {...registerForm.register("email")}
+              />
+              {registerForm.formState.errors.email && (
+                <p className="text-sm text-red-500">
+                  {registerForm.formState.errors.email.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <Label htmlFor="register-password">Password</Label>
+              <Input
+                id="register-password"
+                type="password"
+                {...registerForm.register("password")}
+              />
+              {registerForm.formState.errors.password && (
+                <p className="text-sm text-red-500">
+                  {registerForm.formState.errors.password.message}
+                </p>
+              )}
+            </div>
+
+            <Button
+              type="submit"
+              className="w-full bg-green-600 hover:bg-green-700 text-white"
+            >
+              Register
+            </Button>
+          </form>
         </TabsContent>
       </Tabs>
     </div>

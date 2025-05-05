@@ -28,7 +28,7 @@ const CoursePage = () => {
       setLoading(true);
       try {
         const res = await fetch(
-          `${process.env.SERVER}/client/courses?page=${page}&limit=10`
+          `${process.env.NEXT_PUBLIC_SERVER}/client/courses?page=${page}&limit=10`
         );
         const data = await res.json();
 
