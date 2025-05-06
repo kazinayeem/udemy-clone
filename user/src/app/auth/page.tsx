@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -8,6 +8,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { AppDispatch, RootState } from "@/lib/store";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  loginUser,
+  registerUser,
+  clearAuthError,
+} from "@/lib/features/authSlice";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email"),
@@ -24,6 +31,9 @@ type LoginType = z.infer<typeof loginSchema>;
 type RegisterType = z.infer<typeof registerSchema>;
 
 export default function AuthPage() {
+  const dispatch = useDispatch<AppDispatch>();
+  const { error, loading } = useSelector((state: RootState) => state.auth);
+
   const loginForm = useForm<LoginType>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
@@ -35,14 +45,18 @@ export default function AuthPage() {
   });
 
   const handleLogin = async (data: LoginType) => {
-    console.log("Logging in with:", data);
-    alert(`Welcome back, ${data.email}`);
+    dispatch(loginUser(data));
   };
 
   const handleRegister = async (data: RegisterType) => {
-    console.log("Registering:", data);
-    alert(`Account created for ${data.name}`);
+    dispatch(registerUser({ ...data, role: "STUDENT" }));
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearAuthError());
+    };
+  }, [dispatch]);
 
   return (
     <div className="w-full flex justify-center mt-10 px-4">
@@ -89,11 +103,16 @@ export default function AuthPage() {
               )}
             </div>
 
+            {error && (
+              <p className="text-sm text-red-600 text-center">{error}</p>
+            )}
+
             <Button
               type="submit"
               className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+              disabled={loading}
             >
-              Login
+              {loading ? "Logging in..." : "Login"}
             </Button>
           </form>
         </TabsContent>
@@ -146,11 +165,16 @@ export default function AuthPage() {
               )}
             </div>
 
+            {error && (
+              <p className="text-sm text-red-600 text-center">{error}</p>
+            )}
+
             <Button
               type="submit"
               className="w-full bg-green-600 hover:bg-green-700 text-white"
+              disabled={loading}
             >
-              Register
+              {loading ? "Registering..." : "Register"}
             </Button>
           </form>
         </TabsContent>

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
+import ReduxProvide from "@/lib/ReduxProvide";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,12 +31,13 @@ export default function RootLayout({
       className="[&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
     >
       <body
-       
         className={`${geistSans.variable} ${geistMono.variable} antialiased scrollbar-hide overflow-y-scroll h-screen`}
       >
-        <Navbar />
-        <main> {children}</main>
-        <Footer />
+        <ReduxProvide>
+          <Navbar />
+          <main> {children}</main>
+          <Footer />
+        </ReduxProvide>
       </body>
     </html>
   );

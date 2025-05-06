@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function SearchSection() {
   const logos = [
@@ -30,6 +32,11 @@ export default function SearchSection() {
       src: "https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg",
     },
   ];
+  const router = useRouter();
+  const [searchText, setSearchText] = useState<string>("");
+  const searchHandeler = () => {
+    router.push(`/course?search=${searchText}`);
+  };
 
   return (
     <section className="min-h-screen bg-gradient-to-b from-cyan-100/70 to-white flex flex-col justify-center items-center text-center px-4 py-10">
@@ -65,11 +72,16 @@ export default function SearchSection() {
               size={20}
             />
             <Input
+              onChange={(e) => setSearchText(e.target.value)}
               placeholder="Search for courses"
+              value={searchText}
               className="pl-10 pr-4 py-2 text-base"
             />
           </div>
-          <Button className="bg-blue-600 text-white px-6 py-2 hover:bg-blue-700">
+          <Button
+            onClick={searchHandeler}
+            className="bg-blue-600 text-white px-6 py-2 hover:bg-blue-700"
+          >
             Search
           </Button>
         </div>

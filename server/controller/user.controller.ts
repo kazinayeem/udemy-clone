@@ -24,7 +24,7 @@ export const registerUser = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
     if (!name || !email || !password) {
       res.status(400).json({ message: "All fields are required" });
     }
@@ -33,6 +33,7 @@ export const registerUser = async (
     });
     if (existingUser) {
       res.status(400).json({ message: "User already exists" });
+      return;
     }
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -41,6 +42,7 @@ export const registerUser = async (
         name,
         email,
         password: hashedPassword,
+        role: role,
       },
     });
     res.status(201).json({
@@ -67,6 +69,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
     });
     if (!existingUser) {
       res.status(400).json({ message: "User not Found" });
+      return;
     }
     if (!existingUser) {
       res.status(400).json({ message: "Invalid credentials" });
@@ -78,6 +81,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
     );
     if (!isPasswordValid) {
       res.status(400).json({ message: "Invalid credentials" });
+      return;
     }
     const token = jwt.sign(
       { id: existingUser.id, email: existingUser.email },
