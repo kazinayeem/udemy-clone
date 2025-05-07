@@ -1,7 +1,7 @@
 // lib/features/authSlice.ts
 import { deleteCookie, setCookie } from "@/app/auth/action";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 // Async thunks for login and register
 export const loginUser = createAsyncThunk(
@@ -16,9 +16,10 @@ export const loginUser = createAsyncThunk(
       setCookie("token", res?.data?.user?.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
       return res.data;
-    } catch (err: any) {
+    } catch (err) {
+      const error = err as AxiosError<{ message: string }>;
       return thunkAPI.rejectWithValue(
-        err.response?.data?.message || "Login failed"
+        error.response?.data?.message || "Login failed"
       );
     }
   }
@@ -37,9 +38,10 @@ export const registerUser = createAsyncThunk(
       );
 
       return res.data;
-    } catch (err: any) {
+    } catch (err) {
+      const error = err as AxiosError<{ message: string }>;
       return thunkAPI.rejectWithValue(
-        err.response?.data?.message || "Register failed"
+        error.response?.data?.message || "Register Failled"
       );
     }
   }

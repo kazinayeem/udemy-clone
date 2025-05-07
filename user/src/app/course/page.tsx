@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -14,14 +14,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardHeader,
   CardTitle,
   CardDescription,
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { LucideClock, LucideDollarSign, LucideUser } from "lucide-react";
+import { LucideClock, LucideDollarSign } from "lucide-react";
 
 interface Course {
   id: string;
@@ -131,18 +130,20 @@ const CoursePage = () => {
           <BreadcrumbItem>
             <BreadcrumbLink href="/course">Courses</BreadcrumbLink>
           </BreadcrumbItem>
-          {searchText && (
-            <>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbLink
-                  href={`/course?search=${encodeURIComponent(searchText)}`}
-                >
-                  {searchText}
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-            </>
-          )}
+          <Suspense>
+            {searchText && (
+              <>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbLink
+                    href={`/course?search=${encodeURIComponent(searchText)}`}
+                  >
+                    {searchText}
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+              </>
+            )}
+          </Suspense>
         </BreadcrumbList>
       </Breadcrumb>
 
@@ -165,8 +166,8 @@ const CoursePage = () => {
       <div className="text-center mb-8">
         {searchText ? (
           <h2 className="text-lg text-gray-600">
-            Search results for:{" "}
-            <span className="font-semibold text-gray-800">"{searchText}"</span>
+            Search results for:
+            <span className="font-semibold text-gray-800">{searchText}</span>
           </h2>
         ) : (
           <h2 className="text-lg text-gray-600">All available courses</h2>
@@ -181,11 +182,8 @@ const CoursePage = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {courses.map((course) => (
-            <Link href={`/course/${course.id}`}>
-              <Card
-                key={course.id}
-                className="w-full h-[320px] flex flex-col overflow-hidden"
-              >
+            <Link href={`/course/${course.id}`} key={course.id}>
+              <Card className="w-full h-[320px] flex flex-col overflow-hidden">
                 <div className="relative  w-full">
                   <Image
                     src={course.image}

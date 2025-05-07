@@ -21,11 +21,11 @@ export default function SearchSection() {
     },
     {
       name: "Accenture",
-      src: "https://upload.wikimedia.org/wikipedia/commons/6/6f/Accenture.svg",
+      src: "https://upload.wikimedia.org/wikipedia/commons/1/1c/Accenture_logo.svg",
     },
     {
       name: "Adobe",
-      src: "https://upload.wikimedia.org/wikipedia/commons/5/5f/Adobe_Systems_logo_2000.svg",
+      src: "https://upload.wikimedia.org/wikipedia/commons/7/7b/Adobe_Systems_logo_and_wordmark.svg",
     },
     {
       name: "PayPal",

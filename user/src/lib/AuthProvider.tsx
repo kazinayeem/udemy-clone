@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getCookie } from "@/app/auth/action";
+import { deleteCookie, getCookie } from "@/app/auth/action";
 import { logout, setUser } from "./features/authSlice";
 import { useRouter } from "next/navigation";
 
@@ -13,29 +13,37 @@ type AuthProviderProps = {
 export default function AuthProvider({ children }: AuthProviderProps) {
   const dispatch = useDispatch();
   const router = useRouter();
+
   useEffect(() => {
+    let isMounted = true;
+
     const checkAuth = async () => {
       try {
         const token = await getCookie("token");
-        if (!token) {
+
+        if (!token && isMounted) {
+          await deleteCookie("token");
           dispatch(logout());
-          router.replace("/");
+          router.replace("/"); // Ensure this happens last after state update
           return;
         }
 
         const storedUser = localStorage.getItem("user");
-        if (storedUser) {
-          const parsedUser = JSON.parse(storedUser);
-          dispatch(setUser(parsedUser));
+        if (token && storedUser && isMounted) {
+          dispatch(setUser(JSON.parse(storedUser)));
         }
       } catch (error) {
         console.error("Error during auth check:", error);
-        dispatch(logout());
+        if (isMounted) dispatch(logout());
       }
     };
 
     checkAuth();
-  }, [dispatch]);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [dispatch, router]);
 
   return <>{children}</>;
 }

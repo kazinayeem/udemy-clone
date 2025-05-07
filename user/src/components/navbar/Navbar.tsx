@@ -15,7 +15,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LayoutDashboardIcon } from "lucide-react";
 
 export default function Navbar() {
   const { user } = useSelector((state: RootState) => state.auth);
