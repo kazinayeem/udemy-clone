@@ -15,6 +15,7 @@ import {
   registerUser,
   clearAuthError,
 } from "@/lib/features/authSlice";
+import { useRouter } from "next/navigation";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email"),
@@ -36,16 +37,20 @@ export default function AuthPage() {
 
   const loginForm = useForm<LoginType>({
     resolver: zodResolver(loginSchema),
-    defaultValues: { email: "", password: "" },
+    defaultValues: {
+      email: "kazinayeem@gmail.com",
+      password: "kazinayeem@gmail.com",
+    },
   });
 
   const registerForm = useForm<RegisterType>({
     resolver: zodResolver(registerSchema),
     defaultValues: { name: "", email: "", password: "" },
   });
-
+  const router = useRouter();
   const handleLogin = async (data: LoginType) => {
     dispatch(loginUser(data));
+    router.back();
   };
 
   const handleRegister = async (data: RegisterType) => {

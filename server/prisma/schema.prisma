@@ -2,8 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "../generated/prisma"
+  provider      = "prisma-client-js"
+  output        = "../generated/prisma"
   binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
@@ -58,7 +58,7 @@ model Chapter {
 
 model Course {
   id          String    @id @default(cuid())
-  title       String    
+  title       String
   description String?
   image       String?
   price       Float?
@@ -79,8 +79,8 @@ model Course {
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
   chapterid    String?
-  approval    Boolean      @default(false)
-  Chapter Chapter[]
+  approval     Boolean      @default(false)
+  Chapter      Chapter[]
 }
 
 model Lesson {
@@ -120,14 +120,16 @@ model FQA {
 }
 
 model Enrollment {
-  id       String @id @default(cuid())
-  user     User   @relation(fields: [userId], references: [id])
-  userId   String
-  course   Course @relation(fields: [courseId], references: [id])
-  courseId String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String   @id @default(cuid())
+  user          User     @relation(fields: [userId], references: [id])
+  userId        String
+  course        Course   @relation(fields: [courseId], references: [id])
+  courseId      String
+  paymentMethod String?
+  status        Boolean  @default(false)
+  PaymentId     String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model Review {

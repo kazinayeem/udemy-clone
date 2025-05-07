@@ -9974,6 +9974,9 @@ export namespace Prisma {
     id: string | null
     userId: string | null
     courseId: string | null
+    paymentMethod: string | null
+    status: boolean | null
+    PaymentId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -9982,6 +9985,9 @@ export namespace Prisma {
     id: string | null
     userId: string | null
     courseId: string | null
+    paymentMethod: string | null
+    status: boolean | null
+    PaymentId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -9990,6 +9996,9 @@ export namespace Prisma {
     id: number
     userId: number
     courseId: number
+    paymentMethod: number
+    status: number
+    PaymentId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -10000,6 +10009,9 @@ export namespace Prisma {
     id?: true
     userId?: true
     courseId?: true
+    paymentMethod?: true
+    status?: true
+    PaymentId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -10008,6 +10020,9 @@ export namespace Prisma {
     id?: true
     userId?: true
     courseId?: true
+    paymentMethod?: true
+    status?: true
+    PaymentId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -10016,6 +10031,9 @@ export namespace Prisma {
     id?: true
     userId?: true
     courseId?: true
+    paymentMethod?: true
+    status?: true
+    PaymentId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -10097,6 +10115,9 @@ export namespace Prisma {
     id: string
     userId: string
     courseId: string
+    paymentMethod: string | null
+    status: boolean
+    PaymentId: string | null
     createdAt: Date
     updatedAt: Date
     _count: EnrollmentCountAggregateOutputType | null
@@ -10122,6 +10143,9 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     courseId?: boolean
+    paymentMethod?: boolean
+    status?: boolean
+    PaymentId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -10132,6 +10156,9 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     courseId?: boolean
+    paymentMethod?: boolean
+    status?: boolean
+    PaymentId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -10142,6 +10169,9 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     courseId?: boolean
+    paymentMethod?: boolean
+    status?: boolean
+    PaymentId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -10152,11 +10182,14 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     courseId?: boolean
+    paymentMethod?: boolean
+    status?: boolean
+    PaymentId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type EnrollmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "courseId" | "createdAt" | "updatedAt", ExtArgs["result"]["enrollment"]>
+  export type EnrollmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "courseId" | "paymentMethod" | "status" | "PaymentId" | "createdAt" | "updatedAt", ExtArgs["result"]["enrollment"]>
   export type EnrollmentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | CourseDefaultArgs<ExtArgs>
@@ -10180,6 +10213,9 @@ export namespace Prisma {
       id: string
       userId: string
       courseId: string
+      paymentMethod: string | null
+      status: boolean
+      PaymentId: string | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["enrollment"]>
@@ -10610,6 +10646,9 @@ export namespace Prisma {
     readonly id: FieldRef<"Enrollment", 'String'>
     readonly userId: FieldRef<"Enrollment", 'String'>
     readonly courseId: FieldRef<"Enrollment", 'String'>
+    readonly paymentMethod: FieldRef<"Enrollment", 'String'>
+    readonly status: FieldRef<"Enrollment", 'Boolean'>
+    readonly PaymentId: FieldRef<"Enrollment", 'String'>
     readonly createdAt: FieldRef<"Enrollment", 'DateTime'>
     readonly updatedAt: FieldRef<"Enrollment", 'DateTime'>
   }
@@ -12273,6 +12312,9 @@ export namespace Prisma {
     id: 'id',
     userId: 'userId',
     courseId: 'courseId',
+    paymentMethod: 'paymentMethod',
+    status: 'status',
+    PaymentId: 'PaymentId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -12959,6 +13001,9 @@ export namespace Prisma {
     id?: StringFilter<"Enrollment"> | string
     userId?: StringFilter<"Enrollment"> | string
     courseId?: StringFilter<"Enrollment"> | string
+    paymentMethod?: StringNullableFilter<"Enrollment"> | string | null
+    status?: BoolFilter<"Enrollment"> | boolean
+    PaymentId?: StringNullableFilter<"Enrollment"> | string | null
     createdAt?: DateTimeFilter<"Enrollment"> | Date | string
     updatedAt?: DateTimeFilter<"Enrollment"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -12969,6 +13014,9 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     courseId?: SortOrder
+    paymentMethod?: SortOrderInput | SortOrder
+    status?: SortOrder
+    PaymentId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -12982,6 +13030,9 @@ export namespace Prisma {
     NOT?: EnrollmentWhereInput | EnrollmentWhereInput[]
     userId?: StringFilter<"Enrollment"> | string
     courseId?: StringFilter<"Enrollment"> | string
+    paymentMethod?: StringNullableFilter<"Enrollment"> | string | null
+    status?: BoolFilter<"Enrollment"> | boolean
+    PaymentId?: StringNullableFilter<"Enrollment"> | string | null
     createdAt?: DateTimeFilter<"Enrollment"> | Date | string
     updatedAt?: DateTimeFilter<"Enrollment"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -12992,6 +13043,9 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     courseId?: SortOrder
+    paymentMethod?: SortOrderInput | SortOrder
+    status?: SortOrder
+    PaymentId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: EnrollmentCountOrderByAggregateInput
@@ -13006,6 +13060,9 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Enrollment"> | string
     userId?: StringWithAggregatesFilter<"Enrollment"> | string
     courseId?: StringWithAggregatesFilter<"Enrollment"> | string
+    paymentMethod?: StringNullableWithAggregatesFilter<"Enrollment"> | string | null
+    status?: BoolWithAggregatesFilter<"Enrollment"> | boolean
+    PaymentId?: StringNullableWithAggregatesFilter<"Enrollment"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Enrollment"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Enrollment"> | Date | string
   }
@@ -13693,6 +13750,9 @@ export namespace Prisma {
 
   export type EnrollmentCreateInput = {
     id?: string
+    paymentMethod?: string | null
+    status?: boolean
+    PaymentId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutEnrollmentInput
@@ -13703,12 +13763,18 @@ export namespace Prisma {
     id?: string
     userId: string
     courseId: string
+    paymentMethod?: string | null
+    status?: boolean
+    PaymentId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type EnrollmentUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: BoolFieldUpdateOperationsInput | boolean
+    PaymentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutEnrollmentNestedInput
@@ -13719,6 +13785,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     courseId?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: BoolFieldUpdateOperationsInput | boolean
+    PaymentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -13727,12 +13796,18 @@ export namespace Prisma {
     id?: string
     userId: string
     courseId: string
+    paymentMethod?: string | null
+    status?: boolean
+    PaymentId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
   export type EnrollmentUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: BoolFieldUpdateOperationsInput | boolean
+    PaymentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -13741,6 +13816,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     courseId?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: BoolFieldUpdateOperationsInput | boolean
+    PaymentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14353,6 +14431,9 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     courseId?: SortOrder
+    paymentMethod?: SortOrder
+    status?: SortOrder
+    PaymentId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -14361,6 +14442,9 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     courseId?: SortOrder
+    paymentMethod?: SortOrder
+    status?: SortOrder
+    PaymentId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -14369,6 +14453,9 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     courseId?: SortOrder
+    paymentMethod?: SortOrder
+    status?: SortOrder
+    PaymentId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -15371,6 +15458,9 @@ export namespace Prisma {
 
   export type EnrollmentCreateWithoutUserInput = {
     id?: string
+    paymentMethod?: string | null
+    status?: boolean
+    PaymentId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     course: CourseCreateNestedOneWithoutEnrollmentsInput
@@ -15379,6 +15469,9 @@ export namespace Prisma {
   export type EnrollmentUncheckedCreateWithoutUserInput = {
     id?: string
     courseId: string
+    paymentMethod?: string | null
+    status?: boolean
+    PaymentId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -15482,6 +15575,9 @@ export namespace Prisma {
     id?: StringFilter<"Enrollment"> | string
     userId?: StringFilter<"Enrollment"> | string
     courseId?: StringFilter<"Enrollment"> | string
+    paymentMethod?: StringNullableFilter<"Enrollment"> | string | null
+    status?: BoolFilter<"Enrollment"> | boolean
+    PaymentId?: StringNullableFilter<"Enrollment"> | string | null
     createdAt?: DateTimeFilter<"Enrollment"> | Date | string
     updatedAt?: DateTimeFilter<"Enrollment"> | Date | string
   }
@@ -15917,6 +16013,9 @@ export namespace Prisma {
 
   export type EnrollmentCreateWithoutCourseInput = {
     id?: string
+    paymentMethod?: string | null
+    status?: boolean
+    PaymentId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutEnrollmentInput
@@ -15925,6 +16024,9 @@ export namespace Prisma {
   export type EnrollmentUncheckedCreateWithoutCourseInput = {
     id?: string
     userId: string
+    paymentMethod?: string | null
+    status?: boolean
+    PaymentId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16949,6 +17051,9 @@ export namespace Prisma {
   export type EnrollmentCreateManyUserInput = {
     id?: string
     courseId: string
+    paymentMethod?: string | null
+    status?: boolean
+    PaymentId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17028,6 +17133,9 @@ export namespace Prisma {
 
   export type EnrollmentUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: BoolFieldUpdateOperationsInput | boolean
+    PaymentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     course?: CourseUpdateOneRequiredWithoutEnrollmentsNestedInput
@@ -17036,6 +17144,9 @@ export namespace Prisma {
   export type EnrollmentUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     courseId?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: BoolFieldUpdateOperationsInput | boolean
+    PaymentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17043,6 +17154,9 @@ export namespace Prisma {
   export type EnrollmentUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     courseId?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: BoolFieldUpdateOperationsInput | boolean
+    PaymentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17238,6 +17352,9 @@ export namespace Prisma {
   export type EnrollmentCreateManyCourseInput = {
     id?: string
     userId: string
+    paymentMethod?: string | null
+    status?: boolean
+    PaymentId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17340,6 +17457,9 @@ export namespace Prisma {
 
   export type EnrollmentUpdateWithoutCourseInput = {
     id?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: BoolFieldUpdateOperationsInput | boolean
+    PaymentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutEnrollmentNestedInput
@@ -17348,6 +17468,9 @@ export namespace Prisma {
   export type EnrollmentUncheckedUpdateWithoutCourseInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: BoolFieldUpdateOperationsInput | boolean
+    PaymentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17355,6 +17478,9 @@ export namespace Prisma {
   export type EnrollmentUncheckedUpdateManyWithoutCourseInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: BoolFieldUpdateOperationsInput | boolean
+    PaymentId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

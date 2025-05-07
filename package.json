@@ -16,5 +16,8 @@
   },
   "devDependencies": {
     "concurrently": "^9.1.2"
+  },
+  "dependencies": {
+    "@radix-ui/react-avatar": "^1.1.9"
   }
 }

@@ -206,6 +206,9 @@ exports.Prisma.EnrollmentScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   courseId: 'courseId',
+  paymentMethod: 'paymentMethod',
+  status: 'status',
+  PaymentId: 'PaymentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

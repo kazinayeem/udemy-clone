@@ -2,6 +2,7 @@
 import React from "react";
 import { Provider } from "react-redux";
 import { store } from "./store";
+import AuthProvider from "./AuthProvider";
 export default function ReduxProvide({
   children,
 }: {
@@ -9,7 +10,9 @@ export default function ReduxProvide({
 }) {
   return (
     <React.Fragment>
-      <Provider store={store}>{children}</Provider>
+      <Provider store={store}>
+        <AuthProvider>{children}</AuthProvider>
+      </Provider>
     </React.Fragment>
   );
 }

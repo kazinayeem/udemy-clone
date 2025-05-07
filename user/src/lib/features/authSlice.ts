@@ -1,5 +1,5 @@
 // lib/features/authSlice.ts
-import { setCookie } from "@/app/auth/action";
+import { deleteCookie, setCookie } from "@/app/auth/action";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -67,9 +67,14 @@ const authSlice = createSlice({
     logout: (state) => {
       state.user = null;
       state.error = null;
+      localStorage.removeItem("user");
+      deleteCookie("token");
     },
     clearAuthError(state) {
       state.error = null;
+    },
+    setUser(state, action) {
+      state.user = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -104,5 +109,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, clearAuthError } = authSlice.actions;
+export const { logout, clearAuthError, setUser } = authSlice.actions;
 export default authSlice.reducer;
