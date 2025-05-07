@@ -15,35 +15,24 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   const router = useRouter();
 
   useEffect(() => {
-    let isMounted = true;
-
     const checkAuth = async () => {
-      try {
-        const token = await getCookie("token");
+      const token = await getCookie("token");
 
-        if (!token && isMounted) {
-          await deleteCookie("token");
-          dispatch(logout());
-          router.replace("/"); // Ensure this happens last after state update
-          return;
-        }
+      if (!token) {
+        await deleteCookie("token");
+        dispatch(logout());
+        router.replace("/");
+        return;
+      }
 
-        const storedUser = localStorage.getItem("user");
-        if (token && storedUser && isMounted) {
-          dispatch(setUser(JSON.parse(storedUser)));
-        }
-      } catch (error) {
-        console.error("Error during auth check:", error);
-        if (isMounted) dispatch(logout());
+      const storedUser = localStorage.getItem("user");
+      if (token && storedUser) {
+        dispatch(setUser(JSON.parse(storedUser)));
       }
     };
 
     checkAuth();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [dispatch, router]);
+  }, [dispatch]);
 
   return <>{children}</>;
 }
