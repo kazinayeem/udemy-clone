@@ -154,6 +154,7 @@ export const updateUser = async (
         email: req.body.email,
         country: req.body.country,
         phone: req.body.phone,
+        image: req.body.image,
       },
     });
     res.status(200).json({
@@ -200,7 +201,14 @@ export const getUserById = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  res.status(200).json({ message: "User by ID" });
+  try {
+    const userId = req.user?.id as string;
+    const userinfo = await user.findFirst({ where: { id: userId } });
+    res.status(200).json(userinfo);
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
 export const bannedUser = async (
   req: Request,

@@ -11088,6 +11088,7 @@ export namespace Prisma {
   export type ReviewMinAggregateOutputType = {
     id: string | null
     rating: number | null
+    approved: boolean | null
     comment: string | null
     userId: string | null
     courseId: string | null
@@ -11098,6 +11099,7 @@ export namespace Prisma {
   export type ReviewMaxAggregateOutputType = {
     id: string | null
     rating: number | null
+    approved: boolean | null
     comment: string | null
     userId: string | null
     courseId: string | null
@@ -11108,6 +11110,7 @@ export namespace Prisma {
   export type ReviewCountAggregateOutputType = {
     id: number
     rating: number
+    approved: number
     comment: number
     userId: number
     courseId: number
@@ -11128,6 +11131,7 @@ export namespace Prisma {
   export type ReviewMinAggregateInputType = {
     id?: true
     rating?: true
+    approved?: true
     comment?: true
     userId?: true
     courseId?: true
@@ -11138,6 +11142,7 @@ export namespace Prisma {
   export type ReviewMaxAggregateInputType = {
     id?: true
     rating?: true
+    approved?: true
     comment?: true
     userId?: true
     courseId?: true
@@ -11148,6 +11153,7 @@ export namespace Prisma {
   export type ReviewCountAggregateInputType = {
     id?: true
     rating?: true
+    approved?: true
     comment?: true
     userId?: true
     courseId?: true
@@ -11245,6 +11251,7 @@ export namespace Prisma {
   export type ReviewGroupByOutputType = {
     id: string
     rating: number
+    approved: boolean
     comment: string | null
     userId: string
     courseId: string
@@ -11274,6 +11281,7 @@ export namespace Prisma {
   export type ReviewSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     rating?: boolean
+    approved?: boolean
     comment?: boolean
     userId?: boolean
     courseId?: boolean
@@ -11286,6 +11294,7 @@ export namespace Prisma {
   export type ReviewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     rating?: boolean
+    approved?: boolean
     comment?: boolean
     userId?: boolean
     courseId?: boolean
@@ -11298,6 +11307,7 @@ export namespace Prisma {
   export type ReviewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     rating?: boolean
+    approved?: boolean
     comment?: boolean
     userId?: boolean
     courseId?: boolean
@@ -11310,6 +11320,7 @@ export namespace Prisma {
   export type ReviewSelectScalar = {
     id?: boolean
     rating?: boolean
+    approved?: boolean
     comment?: boolean
     userId?: boolean
     courseId?: boolean
@@ -11317,7 +11328,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type ReviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "rating" | "comment" | "userId" | "courseId" | "createdAt" | "updatedAt", ExtArgs["result"]["review"]>
+  export type ReviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "rating" | "approved" | "comment" | "userId" | "courseId" | "createdAt" | "updatedAt", ExtArgs["result"]["review"]>
   export type ReviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     course?: boolean | CourseDefaultArgs<ExtArgs>
@@ -11340,6 +11351,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       rating: number
+      approved: boolean
       comment: string | null
       userId: string
       courseId: string
@@ -11772,6 +11784,7 @@ export namespace Prisma {
   interface ReviewFieldRefs {
     readonly id: FieldRef<"Review", 'String'>
     readonly rating: FieldRef<"Review", 'Int'>
+    readonly approved: FieldRef<"Review", 'Boolean'>
     readonly comment: FieldRef<"Review", 'String'>
     readonly userId: FieldRef<"Review", 'String'>
     readonly courseId: FieldRef<"Review", 'String'>
@@ -12325,6 +12338,7 @@ export namespace Prisma {
   export const ReviewScalarFieldEnum: {
     id: 'id',
     rating: 'rating',
+    approved: 'approved',
     comment: 'comment',
     userId: 'userId',
     courseId: 'courseId',
@@ -13073,6 +13087,7 @@ export namespace Prisma {
     NOT?: ReviewWhereInput | ReviewWhereInput[]
     id?: StringFilter<"Review"> | string
     rating?: IntFilter<"Review"> | number
+    approved?: BoolFilter<"Review"> | boolean
     comment?: StringNullableFilter<"Review"> | string | null
     userId?: StringFilter<"Review"> | string
     courseId?: StringFilter<"Review"> | string
@@ -13085,6 +13100,7 @@ export namespace Prisma {
   export type ReviewOrderByWithRelationInput = {
     id?: SortOrder
     rating?: SortOrder
+    approved?: SortOrder
     comment?: SortOrderInput | SortOrder
     userId?: SortOrder
     courseId?: SortOrder
@@ -13100,6 +13116,7 @@ export namespace Prisma {
     OR?: ReviewWhereInput[]
     NOT?: ReviewWhereInput | ReviewWhereInput[]
     rating?: IntFilter<"Review"> | number
+    approved?: BoolFilter<"Review"> | boolean
     comment?: StringNullableFilter<"Review"> | string | null
     userId?: StringFilter<"Review"> | string
     courseId?: StringFilter<"Review"> | string
@@ -13112,6 +13129,7 @@ export namespace Prisma {
   export type ReviewOrderByWithAggregationInput = {
     id?: SortOrder
     rating?: SortOrder
+    approved?: SortOrder
     comment?: SortOrderInput | SortOrder
     userId?: SortOrder
     courseId?: SortOrder
@@ -13130,6 +13148,7 @@ export namespace Prisma {
     NOT?: ReviewScalarWhereWithAggregatesInput | ReviewScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Review"> | string
     rating?: IntWithAggregatesFilter<"Review"> | number
+    approved?: BoolWithAggregatesFilter<"Review"> | boolean
     comment?: StringNullableWithAggregatesFilter<"Review"> | string | null
     userId?: StringWithAggregatesFilter<"Review"> | string
     courseId?: StringWithAggregatesFilter<"Review"> | string
@@ -13826,6 +13845,7 @@ export namespace Prisma {
   export type ReviewCreateInput = {
     id?: string
     rating: number
+    approved?: boolean
     comment?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -13836,6 +13856,7 @@ export namespace Prisma {
   export type ReviewUncheckedCreateInput = {
     id?: string
     rating: number
+    approved?: boolean
     comment?: string | null
     userId: string
     courseId: string
@@ -13846,6 +13867,7 @@ export namespace Prisma {
   export type ReviewUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
+    approved?: BoolFieldUpdateOperationsInput | boolean
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13856,6 +13878,7 @@ export namespace Prisma {
   export type ReviewUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
+    approved?: BoolFieldUpdateOperationsInput | boolean
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
     courseId?: StringFieldUpdateOperationsInput | string
@@ -13866,6 +13889,7 @@ export namespace Prisma {
   export type ReviewCreateManyInput = {
     id?: string
     rating: number
+    approved?: boolean
     comment?: string | null
     userId: string
     courseId: string
@@ -13876,6 +13900,7 @@ export namespace Prisma {
   export type ReviewUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
+    approved?: BoolFieldUpdateOperationsInput | boolean
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -13884,6 +13909,7 @@ export namespace Prisma {
   export type ReviewUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
+    approved?: BoolFieldUpdateOperationsInput | boolean
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
     courseId?: StringFieldUpdateOperationsInput | string
@@ -14474,6 +14500,7 @@ export namespace Prisma {
   export type ReviewCountOrderByAggregateInput = {
     id?: SortOrder
     rating?: SortOrder
+    approved?: SortOrder
     comment?: SortOrder
     userId?: SortOrder
     courseId?: SortOrder
@@ -14488,6 +14515,7 @@ export namespace Prisma {
   export type ReviewMaxOrderByAggregateInput = {
     id?: SortOrder
     rating?: SortOrder
+    approved?: SortOrder
     comment?: SortOrder
     userId?: SortOrder
     courseId?: SortOrder
@@ -14498,6 +14526,7 @@ export namespace Prisma {
   export type ReviewMinOrderByAggregateInput = {
     id?: SortOrder
     rating?: SortOrder
+    approved?: SortOrder
     comment?: SortOrder
     userId?: SortOrder
     courseId?: SortOrder
@@ -15489,6 +15518,7 @@ export namespace Prisma {
   export type ReviewCreateWithoutUserInput = {
     id?: string
     rating: number
+    approved?: boolean
     comment?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -15498,6 +15528,7 @@ export namespace Prisma {
   export type ReviewUncheckedCreateWithoutUserInput = {
     id?: string
     rating: number
+    approved?: boolean
     comment?: string | null
     courseId: string
     createdAt?: Date | string
@@ -15604,6 +15635,7 @@ export namespace Prisma {
     NOT?: ReviewScalarWhereInput | ReviewScalarWhereInput[]
     id?: StringFilter<"Review"> | string
     rating?: IntFilter<"Review"> | number
+    approved?: BoolFilter<"Review"> | boolean
     comment?: StringNullableFilter<"Review"> | string | null
     userId?: StringFilter<"Review"> | string
     courseId?: StringFilter<"Review"> | string
@@ -15917,6 +15949,7 @@ export namespace Prisma {
   export type ReviewCreateWithoutCourseInput = {
     id?: string
     rating: number
+    approved?: boolean
     comment?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -15926,6 +15959,7 @@ export namespace Prisma {
   export type ReviewUncheckedCreateWithoutCourseInput = {
     id?: string
     rating: number
+    approved?: boolean
     comment?: string | null
     userId: string
     createdAt?: Date | string
@@ -17061,6 +17095,7 @@ export namespace Prisma {
   export type ReviewCreateManyUserInput = {
     id?: string
     rating: number
+    approved?: boolean
     comment?: string | null
     courseId: string
     createdAt?: Date | string
@@ -17164,6 +17199,7 @@ export namespace Prisma {
   export type ReviewUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
+    approved?: BoolFieldUpdateOperationsInput | boolean
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17173,6 +17209,7 @@ export namespace Prisma {
   export type ReviewUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
+    approved?: BoolFieldUpdateOperationsInput | boolean
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     courseId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17182,6 +17219,7 @@ export namespace Prisma {
   export type ReviewUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
+    approved?: BoolFieldUpdateOperationsInput | boolean
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     courseId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17335,6 +17373,7 @@ export namespace Prisma {
   export type ReviewCreateManyCourseInput = {
     id?: string
     rating: number
+    approved?: boolean
     comment?: string | null
     userId: string
     createdAt?: Date | string
@@ -17407,6 +17446,7 @@ export namespace Prisma {
   export type ReviewUpdateWithoutCourseInput = {
     id?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
+    approved?: BoolFieldUpdateOperationsInput | boolean
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17416,6 +17456,7 @@ export namespace Prisma {
   export type ReviewUncheckedUpdateWithoutCourseInput = {
     id?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
+    approved?: BoolFieldUpdateOperationsInput | boolean
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17425,6 +17466,7 @@ export namespace Prisma {
   export type ReviewUncheckedUpdateManyWithoutCourseInput = {
     id?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
+    approved?: BoolFieldUpdateOperationsInput | boolean
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

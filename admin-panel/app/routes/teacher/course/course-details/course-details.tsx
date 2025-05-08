@@ -61,7 +61,10 @@ export default function CourseDetails() {
       </Link>
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold ml-6">Course Details</h1>
-        <Link to={`/teacher/course/course-details/${courseId}/fqa/`}>
+        <Link
+          className="inline-block px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold transition duration-200"
+          to={`/teacher/course/course-details/${courseId}/fqa/`}
+        >
           Add FQA
         </Link>
         <span className="text-lg text-gray-500">{completionText}</span>

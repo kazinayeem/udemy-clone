@@ -128,10 +128,14 @@ export const getAllFAQs = async (
   res: Response
 ): Promise<void> => {
   try {
-    const courseId = req.query.courseId as string;
+    const courseId = req.params.courseId as string;
+    if (!courseId) {
+      res.status(400).json({ message: "not found" });
+      return;
+    }
 
     const faqs = await fQA.findMany({
-      where: courseId ? { courseId } : {},
+      where: { courseId },
       orderBy: { createdAt: "desc" },
     });
 
@@ -370,7 +374,7 @@ export const uploadImage = async (
       }
     }
     const result = await cloudinary.uploader.upload(
-      imageFile.tempFilePath || imageFile.tempFilePath, 
+      imageFile.tempFilePath || imageFile.tempFilePath,
       {
         folder: "lwm",
       }

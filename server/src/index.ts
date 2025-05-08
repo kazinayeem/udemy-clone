@@ -11,12 +11,17 @@ import teacherRoutes from "../routes/teacher.routes";
 import userPartRoutes from "../routes/user-part.routes";
 import enrollmentRoutes from "../routes/enrollment.routes";
 import { generateCourseDescription } from "../controller/ai.controller";
-
+import reviewRoutes from "../routes/review.routes";
 const app = express();
 dotenv.config();
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:3000"],
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:3000",
+      "http://192.168.0.104:3000",
+      "http://192.168.0.104:5173",
+    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
@@ -41,6 +46,7 @@ app.use("/api/category", categoryRoutes);
 app.use("/api/teacher", teacherRoutes);
 app.use("/api/client", userPartRoutes);
 app.use("/api/enrollment", enrollmentRoutes);
+app.use("/api/review", reviewRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");

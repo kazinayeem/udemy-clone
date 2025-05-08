@@ -5,6 +5,7 @@ import { courseApi } from "../api/courseApi";
 import { userApi } from "../api/userApi";
 import { studentAndTeacherApi } from "../api/adminApi";
 import { categoryApi } from "../api/categoryApi";
+import { reviewApi } from "../api/reviewApi";
 const store = configureStore({
   reducer: {
     auth: AuthReducer,
@@ -12,13 +13,15 @@ const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [studentAndTeacherApi.reducerPath]: studentAndTeacherApi.reducer,
     [categoryApi.reducerPath]: categoryApi.reducer,
+    [reviewApi.reducerPath]: reviewApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(courseApi.middleware)
       .concat(userApi.middleware)
       .concat(categoryApi.middleware)
-      .concat(studentAndTeacherApi.middleware),
+      .concat(studentAndTeacherApi.middleware)
+      .concat(reviewApi.middleware),
   devTools: process.env.NODE_ENV !== "production",
 });
 export type AppDispatch = typeof store.dispatch;

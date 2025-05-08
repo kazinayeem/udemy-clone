@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "react-hot-toast";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
 import ReduxProvide from "@/lib/ReduxProvide";
@@ -37,6 +38,7 @@ export default function RootLayout({
           <Navbar />
           <main> {children}</main>
           <Footer />
+          <Toaster position="top-right" reverseOrder={false} />
         </ReduxProvide>
       </body>
     </html>

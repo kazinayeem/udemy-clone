@@ -1,6 +1,7 @@
 "use client";
 
 import { getCookie } from "@/app/auth/action";
+import ReviewSection from "@/components/ReviewSection";
 import { Alert } from "@/components/ui/alert";
 import axios from "axios";
 import { useParams } from "next/navigation";
@@ -49,10 +50,13 @@ export default function CoursePage() {
             },
           }
         );
-        
+
         if (!res.data.Chapter || res.data.Chapter.length === 0) {
           setError("No chapters available for this course.");
-        } else if (!res.data.Chapter[0].lessons || res.data.Chapter[0].lessons.length === 0) {
+        } else if (
+          !res.data.Chapter[0].lessons ||
+          res.data.Chapter[0].lessons.length === 0
+        ) {
           setError("No lessons available in the first chapter.");
         } else {
           setCourse(res.data);
@@ -86,52 +90,56 @@ export default function CoursePage() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] min-h-screen gap-4">
-      <aside className="bg-gray-100 border-r p-4 overflow-y-auto">
-        <h2 className="text-xl font-semibold mb-4">Course Content</h2>
-        {course?.Chapter?.map((chapter) => (
-          <div key={chapter.id} className="mb-4">
-            <h3 className="text-md font-semibold mb-2">{chapter.title}</h3>
-            <ul className="space-y-1">
-              {chapter?.lessons?.map((lesson) => (
-                <li
-                  key={lesson.id}
-                  className={`cursor-pointer p-2 rounded-md hover:bg-gray-200 transition-all duration-300 ease-in-out ${
-                    activeLesson.id === lesson.id ? "bg-gray-300" : ""
-                  }`}
-                  onClick={() => setActiveLesson(lesson)}
-                >
-                  ▶ {lesson.title}
-                </li>
-              ))}
-            </ul>
+    <>
+      {" "}
+      <ReviewSection courseId={courseId} />{" "}
+      <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] min-h-screen gap-4">
+        <aside className="bg-gray-100 border-r p-4 overflow-y-auto">
+          <h2 className="text-xl font-semibold mb-4">Course Content</h2>
+          {course?.Chapter?.map((chapter) => (
+            <div key={chapter.id} className="mb-4">
+              <h3 className="text-md font-semibold mb-2">{chapter.title}</h3>
+              <ul className="space-y-1">
+                {chapter?.lessons?.map((lesson) => (
+                  <li
+                    key={lesson.id}
+                    className={`cursor-pointer p-2 rounded-md hover:bg-gray-200 transition-all duration-300 ease-in-out ${
+                      activeLesson.id === lesson.id ? "bg-gray-300" : ""
+                    }`}
+                    onClick={() => setActiveLesson(lesson)}
+                  >
+                    ▶ {lesson.title}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </aside>
+
+        {/* Main Video Area */}
+        <main className="p-6 space-y-6">
+          <div className="aspect-video rounded-xl overflow-hidden shadow-md">
+            <ReactPlayer
+              url={activeLesson.video}
+              controls
+              width="100%"
+              height="100%"
+              className="rounded-xl"
+            />
           </div>
-        ))}
-      </aside>
+          <div>
+            <h1 className="text-2xl font-bold">{activeLesson.title}</h1>
+          </div>
 
-      {/* Main Video Area */}
-      <main className="p-6 space-y-6">
-        <div className="aspect-video rounded-xl overflow-hidden shadow-md">
-          <ReactPlayer
-            url={activeLesson.video}
-            controls
-            width="100%"
-            height="100%"
-            className="rounded-xl"
-          />
-        </div>
-        <div>
-          <h1 className="text-2xl font-bold">{activeLesson.title}</h1>
-        </div>
-
-        {/* Dynamic Lesson Description */}
-        <div className="lesson-description mt-4 p-4 bg-gray-50 rounded-md shadow-md">
-          <div
-            className="prose max-w-4xl"
-            dangerouslySetInnerHTML={{ __html: activeLesson.description }}
-          />
-        </div>
-      </main>
-    </div>
+          {/* Dynamic Lesson Description */}
+          <div className="lesson-description mt-4 p-4 bg-gray-50 rounded-md shadow-md">
+            <div
+              className="prose max-w-4xl"
+              dangerouslySetInnerHTML={{ __html: activeLesson.description }}
+            />
+          </div>
+        </main>
+      </div>
+    </>
   );
 }

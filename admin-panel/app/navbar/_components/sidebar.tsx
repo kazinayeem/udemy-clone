@@ -30,7 +30,7 @@ const Sidebar: React.FC = () => {
 
   return (
     <aside className="h-screen w-64 bg-white border-r p-5 flex flex-col">
-      <div className="text-2xl font-bold mb-8">Udemy</div>
+      <div className="text-2xl font-bold mb-8">Edemy</div>
       <nav className="flex flex-col gap-2">
         {routes.map((item) => (
           <SidebarItem

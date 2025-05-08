@@ -18,6 +18,7 @@ export default [
       route("students", "routes/dashboard/student/index.tsx"),
       route("teachers", "routes/dashboard/teacher/index.tsx"),
       route("course-management", "routes/dashboard/course/index.tsx"),
+      route("review-management", "routes/dashboard/review/index.tsx"),
       route("*", "routes/dashboard/not-found.tsx"),
     ]),
   ]),

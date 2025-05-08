@@ -28,6 +28,11 @@ export const adminRoutes = [
     link: "/dashboard/course-management",
   },
   {
+    label: "Review Management",
+    icon: <User size={18} />,
+    link: "/dashboard/review-management",
+  },
+  {
     label: "Settings",
     icon: <Settings size={18} />,
     link: "/dashboard/settings",

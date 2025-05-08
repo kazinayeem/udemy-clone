@@ -56,7 +56,9 @@ export default function CoursePage() {
   const { courseid } = useParams() as { courseid: string };
   const router = useRouter();
 
-  const [courseData, setCourseData] = useState<CourseResponse["data"] | null>(null);
+  const [courseData, setCourseData] = useState<CourseResponse["data"] | null>(
+    null
+  );
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [enrolled, setEnrolled] = useState(false);
 
@@ -66,9 +68,12 @@ export default function CoursePage() {
       setIsLoggedIn(!!token);
 
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/client/course/${courseid}`, {
-          cache: "no-store",
-        });
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER}/client/course/${courseid}`,
+          {
+            cache: "no-store",
+          }
+        );
 
         if (!res.ok) {
           router.replace("/not-found");
@@ -97,7 +102,7 @@ export default function CoursePage() {
     fetchData();
   }, [courseid, router]);
 
-  if (!courseData) return <Loading/>;
+  if (!courseData) return <Loading />;
 
   const totalLessons = courseData.chapters.reduce(
     (sum, ch) => sum + ch.lessons.length,
@@ -125,7 +130,9 @@ export default function CoursePage() {
                 ${courseData.price.toFixed(2)}
               </span>
               <span className="line-through text-gray-400">$69.99</span>
-              <span className="text-green-600 text-sm font-semibold">20% off</span>
+              <span className="text-green-600 text-sm font-semibold">
+                20% off
+              </span>
             </div>
             <div className="flex flex-wrap items-center text-sm text-muted-foreground gap-4 mb-4">
               <span>⭐ 3</span>
@@ -147,7 +154,9 @@ export default function CoursePage() {
               </Link>
             )}
 
-            <h3 className="font-semibold text-lg mb-4">What&apos;s in the course?</h3>
+            <h3 className="font-semibold text-lg mb-4">
+              What&apos;s in the course?
+            </h3>
             <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
               <li>Lifetime access with free updates</li>
               <li>Step-by-step, hands-on project guidance</li>
@@ -157,9 +166,9 @@ export default function CoursePage() {
 
           {/* Left Content */}
           <div className="order-2 md:order-1 md:col-span-2">
-            <h1 className="text-3xl font-extrabold mb-4">{courseData.title}</h1>
+            <h1 className="p-2 text-2xl font-extrabold mb-4">{courseData.title}</h1>
             <p
-              className="text-lg text-gray-800 leading-relaxed mb-8"
+              className="text-sm p-6 text-gray-800 leading-relaxed mb-8"
               dangerouslySetInnerHTML={{ __html: courseData.description || "" }}
             ></p>
 
@@ -205,16 +214,19 @@ export default function CoursePage() {
                           {!lesson.isFree && (
                             <div className="flex items-center mt-2 text-gray-500">
                               <Lock className="mr-2 text-red-500" />
-                              <span className="text-sm">This lesson is locked</span>
+                              <span className="text-sm">
+                                This lesson is locked
+                              </span>
                             </div>
                           )}
-                          {lesson.isFree && lesson.video?.includes("youtube.com") && (
-                            <div className="mt-3">
-                              <Suspense fallback={<h1>Loading...</h1>}>
-                                <FreePreviewButton videoUrl={lesson.video} />
-                              </Suspense>
-                            </div>
-                          )}
+                          {lesson.isFree &&
+                            lesson.video?.includes("youtube.com") && (
+                              <div className="mt-3">
+                                <Suspense fallback={<h1>Loading...</h1>}>
+                                  <FreePreviewButton videoUrl={lesson.video} />
+                                </Suspense>
+                              </div>
+                            )}
                         </div>
                       ))
                     )}

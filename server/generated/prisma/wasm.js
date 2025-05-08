@@ -216,6 +216,7 @@ exports.Prisma.EnrollmentScalarFieldEnum = {
 exports.Prisma.ReviewScalarFieldEnum = {
   id: 'id',
   rating: 'rating',
+  approved: 'approved',
   comment: 'comment',
   userId: 'userId',
   courseId: 'courseId',
