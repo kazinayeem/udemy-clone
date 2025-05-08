@@ -14,6 +14,7 @@ import {
   updateCourse,
   updateFaq,
   updateLessons,
+  uploadImage,
 } from "../controller/course.controller";
 import { checkLogin } from "../middleware/checkLogin";
 
@@ -39,5 +40,5 @@ router.get("/course/:courseId/fqa", getAllFAQs);
 router.post("/course/:courseId/fqa", createFeq);
 router.put("/course/faq/:faqId", updateFaq);
 router.delete("/course/faq/:faqId", deleteFaq);
-
+router.put("/course/image/upload", uploadImage);
 export default router;

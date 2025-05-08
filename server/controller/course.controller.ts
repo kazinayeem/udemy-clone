@@ -1,6 +1,12 @@
 import { Request, Response } from "express";
 import { course, lesson, chapter, fQA } from "../config/db";
+import { v2 as cloudinary } from "cloudinary";
 
+cloudinary.config({
+  cloud_name: "daq7v0wmf",
+  api_key: "155683868831529",
+  api_secret: "5NMrAe560Tw2DtYHdTgq1arigkA",
+});
 export const addCourse = async (req: Request, res: Response): Promise<void> => {
   const userId = req.user?.id;
 
@@ -158,9 +164,9 @@ export const GetCoursebyId = async (
         user: true,
         lessons: true,
         Chapter: {
-          include : {
-            lessons : true
-          }
+          include: {
+            lessons: true,
+          },
         },
       },
     });
@@ -326,6 +332,62 @@ export const updateCourse = async (
   } catch (error) {
     console.error("Error updating course:", error);
     res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+function extractPublicId(secureUrl: string) {
+  const url = new URL(secureUrl);
+  const parts = url.pathname.split("/");
+  const versionIndex = parts.findIndex((p) => /^v\d+$/i.test(p));
+  const publicIdParts = parts.slice(versionIndex + 1);
+  const lastPart = publicIdParts[publicIdParts.length - 1];
+  publicIdParts[publicIdParts.length - 1] = lastPart.split(".")[0];
+  return publicIdParts.join("/");
+}
+export const uploadImage = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    if (!req.files || !req.files.image) {
+      res.status(400).json({ message: "No image file uploaded." });
+      return;
+    }
+
+    const imageFile = req.files.image as any;
+    const secureUrl = req.body?.secure_url || null;
+    if (secureUrl) {
+      try {
+        const publicId = extractPublicId(secureUrl);
+        if (publicId) {
+          await cloudinary.uploader.destroy(publicId);
+          console.log("Previous image deleted:", publicId);
+        } else {
+          console.warn("No valid public ID extracted from URL:", secureUrl);
+        }
+      } catch (deleteErr) {
+        console.warn("Failed to delete previous image:", deleteErr);
+      }
+    }
+    const result = await cloudinary.uploader.upload(
+      imageFile.tempFilePath || imageFile.tempFilePath, 
+      {
+        folder: "lwm",
+      }
+    );
+    if (!result || !result.secure_url) {
+      throw new Error("Image upload failed: Missing secure_url");
+    }
+    res.status(200).json({
+      url: result.secure_url,
+    });
+  } catch (error) {
+    console.error("Image upload error:", error);
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
+    res
+      .status(500)
+      .json({ message: "Image upload failed.", error: errorMessage });
   }
 };
 

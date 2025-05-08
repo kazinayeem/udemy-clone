@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import logger from "morgan";
 import dotenv from "dotenv";
+import fileUpload from "express-fileupload";
 import db from "../config/db";
 import userRoutes from "../routes/user.routes";
 import courseRoutes from "../routes/course.routes";
@@ -19,6 +20,13 @@ app.use(
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "/tmp/",
+    // parseNested: true,
+  })
+);
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -26,7 +34,7 @@ app.use(express.static("public"));
 app.use(express.static("uploads"));
 
 const port = "8080";
-app.post('/api/generate-description', generateCourseDescription);
+app.post("/api/generate-description", generateCourseDescription);
 app.use("/api", userRoutes);
 app.use("/api", courseRoutes);
 app.use("/api/category", categoryRoutes);
