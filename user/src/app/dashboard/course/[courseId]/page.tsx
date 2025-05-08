@@ -134,7 +134,7 @@ export default function CoursePage() {
           {/* Dynamic Lesson Description */}
           <div className="lesson-description mt-4 p-4 bg-gray-50 rounded-md shadow-md">
             <div
-              className="prose max-w-4xl"
+              className="prose max-w-4xl text-sm tracking-wide"
               dangerouslySetInnerHTML={{ __html: activeLesson.description }}
             />
           </div>

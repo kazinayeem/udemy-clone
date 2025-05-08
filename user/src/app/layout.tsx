@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
 import ReduxProvide from "@/lib/ReduxProvide";
+import CookieConsent from "@/components/CookieConsent";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,6 +39,7 @@ export default function RootLayout({
           <Navbar />
           <main> {children}</main>
           <Footer />
+          <CookieConsent/>
           <Toaster position="top-right" reverseOrder={false} />
         </ReduxProvide>
       </body>

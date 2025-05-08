@@ -119,7 +119,7 @@ const CoursePage = () => {
   };
 
   return (
-    <div className="py-16 md:px-40 px-8 m-auto">
+    <div className="py-16 md:px-40 px-8 m-auto bg-gradient-to-b from-cyan-100/70 to-white">
       {/* Breadcrumb */}
       <Breadcrumb className="mb-6">
         <BreadcrumbList>

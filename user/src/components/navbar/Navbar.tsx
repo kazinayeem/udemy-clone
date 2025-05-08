@@ -4,7 +4,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/lib/store";
 import {
   DropdownMenu,
@@ -15,10 +15,20 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useRouter } from "next/navigation";
+import { logout } from "@/lib/features/authSlice";
+import { deleteCookie } from "@/app/auth/action";
 
 export default function Navbar() {
   const { user } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
+  const router = useRouter();
 
+  const logoutHandler = async () => {
+    dispatch(logout());
+    await deleteCookie("token");
+    router.replace("/");
+  };
   const userInitial = user?.name ? user.name.charAt(0).toUpperCase() : "U";
 
   return (
@@ -51,10 +61,12 @@ export default function Navbar() {
                 <Link href={"/profile"}>Profile</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href={"/dashboard"}>Dashboard</Link>
+                <Link href={"/dashboard/course"}>Dashboard</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>Team</DropdownMenuItem>
-              <DropdownMenuItem>Subscription</DropdownMenuItem>
+
+              <DropdownMenuItem onClick={logoutHandler}>
+                LogOut
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (

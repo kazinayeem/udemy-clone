@@ -1,4 +1,4 @@
-import { DesktopNavbar } from "./navBar/DesktopNavbar";
+import { AppSidebar } from "./navBar/DesktopNavbar";
 import { MobileNavbar } from "./navBar/mobile-navbar";
 
 export const Navbar = () => {
@@ -11,7 +11,7 @@ export const Navbar = () => {
 
       {/* Desktop Sidebar Navbar */}
       <div className="lg:flex hidden">
-        <DesktopNavbar />
+        <AppSidebar />
       </div>
     </header>
   );

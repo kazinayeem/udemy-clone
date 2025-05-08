@@ -114,7 +114,7 @@ export default function CoursePage() {
       <div className="max-w-7xl mx-auto px-6 sm:px-8 py-12">
         {/* Right Sidebar */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="order-1 md:order-2 bg-white rounded-lg shadow-lg p-6">
+          <div className="order-1 md:order-2 bg-white rounded-lg shadow-lg p-6 h-[480px]">
             <Image
               src={courseData.image}
               alt={courseData.title}
@@ -154,25 +154,27 @@ export default function CoursePage() {
               </Link>
             )}
 
-            <h3 className="font-semibold text-lg mb-4">
+            {/* <h3 className="font-semibold text-lg mb-4">
               What&apos;s in the course?
             </h3>
             <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
               <li>Lifetime access with free updates</li>
               <li>Step-by-step, hands-on project guidance</li>
               <li>Real-world examples and tools</li>
-            </ul>
+            </ul> */}
           </div>
 
           {/* Left Content */}
           <div className="order-2 md:order-1 md:col-span-2">
-            <h1 className="p-2 text-2xl font-extrabold mb-4">{courseData.title}</h1>
+            <h1 className="p-2 text-2xl font-extrabold mb-4">
+              {courseData.title}
+            </h1>
             <p
-              className="text-sm p-6 text-gray-800 leading-relaxed mb-8"
+              className="p-6 text-gray-800 leading-relaxed mb-8 tracking-wide text-base/8"
               dangerouslySetInnerHTML={{ __html: courseData.description || "" }}
             ></p>
 
-            <div className="flex flex-wrap items-center gap-3 text-sm mb-4 text-muted-foreground">
+            <div className="p-6 flex flex-wrap items-center gap-3 text-sm mb-4 text-muted-foreground">
               <span>⭐ 3</span>
               <span>(5 ratings)</span>
               <span>· 11 students</span>
@@ -185,8 +187,8 @@ export default function CoursePage() {
               </span>
             </p>
 
-            <h2 className="text-xl font-semibold mb-4">Course Structure</h2>
-            <Accordion type="multiple" className="w-full">
+            <h2 className="text-xl font-semibold mb-4 p-6">Course Structure</h2>
+            <Accordion type="multiple" className="w-full p-6">
               {courseData.chapters.map((chapter) => (
                 <AccordionItem value={chapter.id} key={chapter.id}>
                   <AccordionTrigger>

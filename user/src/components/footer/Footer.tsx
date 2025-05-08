@@ -2,6 +2,7 @@ import React from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -42,14 +43,14 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-white">
+              <Link href="/contact" className="hover:text-white">
                 Contact us
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="hover:text-white">
+              <Link href="/privacy-policy" className="hover:text-white">
                 Privacy policy
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

@@ -21,7 +21,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
       if (!token) {
         await deleteCookie("token");
         dispatch(logout());
-        router.replace("/");
+        router.replace("/auth");
         return;
       }
 
