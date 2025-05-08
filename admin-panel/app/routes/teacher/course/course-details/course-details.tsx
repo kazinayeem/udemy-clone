@@ -74,6 +74,7 @@ export default function CourseDetails() {
           title={data?.title as string}
         />
         <DescriptionForm
+          title={data?.title as string}
           courseid={courseId as string}
           userid={data?.userId as string}
           description={data?.description as string}

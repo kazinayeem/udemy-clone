@@ -65,6 +65,7 @@ export default function Lessons() {
           title={title}
         />
         <DescriptionForm
+          title={title}
           courseid={courseId as string}
           lessonId={lessonId as string}
           description={description}

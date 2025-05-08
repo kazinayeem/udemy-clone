@@ -250,8 +250,15 @@ export const getMyCourseById = async (
           include: {
             category: true,
             Chapter: {
+              orderBy: {
+                createdAt: "asc",
+              },
               include: {
-                lessons: true,
+                lessons: {
+                  orderBy: {
+                    createdAt: "asc",
+                  },
+                },
               },
             },
           },

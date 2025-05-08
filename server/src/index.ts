@@ -9,6 +9,8 @@ import categoryRoutes from "../routes/category.routes";
 import teacherRoutes from "../routes/teacher.routes";
 import userPartRoutes from "../routes/user-part.routes";
 import enrollmentRoutes from "../routes/enrollment.routes";
+import { generateCourseDescription } from "../controller/ai.controller";
+
 const app = express();
 dotenv.config();
 app.use(
@@ -24,12 +26,14 @@ app.use(express.static("public"));
 app.use(express.static("uploads"));
 
 const port = "8080";
+app.post('/api/generate-description', generateCourseDescription);
 app.use("/api", userRoutes);
 app.use("/api", courseRoutes);
 app.use("/api/category", categoryRoutes);
 app.use("/api/teacher", teacherRoutes);
 app.use("/api/client", userPartRoutes);
 app.use("/api/enrollment", enrollmentRoutes);
+
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
   console.log("Response sent");
