@@ -54,7 +54,7 @@ export default function DescriptionForm({
 
     try {
       const res = await fetch(
-        "http://localhost:8080/api/generate-description",
+        `${import.meta.env.VITE_SERVER_API}/generate-description`,
         {
           method: "POST",
           headers: {

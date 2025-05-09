@@ -40,10 +40,13 @@ export default function ImageUrlForm({
       formData.append("image", imageFile);
       if (currentImageUrl) formData.append("secure_url", currentImageUrl);
 
-      const res = await fetch("http://localhost:8080/api/course/image/upload", {
-        method: "PUT",
-        body: formData,
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_SERVER_API}/course/image/upload`,
+        {
+          method: "PUT",
+          body: formData,
+        }
+      );
 
       if (!res.ok) throw new Error("Upload failed");
 

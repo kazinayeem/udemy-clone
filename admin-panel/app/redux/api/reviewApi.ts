@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const reviewApi = createApi({
   reducerPath: "reviewApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8080/api",
+    baseUrl: `${import.meta.env.VITE_SERVER_API}`,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       if (token) {
