@@ -51,7 +51,7 @@ export default function CheckoutPage() {
     try {
       const token = await getCookie("token");
       const res = await axios.post(
-        "http://localhost:8080/api/enrollment/",
+        `${process.env.NEXT_PUBLIC_SERVER}/enrollment/`,
         { courseId },
         {
           headers: {

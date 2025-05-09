@@ -85,7 +85,7 @@ export default function CoursePage() {
 
         if (token) {
           const check = await axios.get(
-            `http://localhost:8080/api/enrollment/check/${courseid}`,
+            `${process.env.NEXT_PUBLIC_SERVER}/enrollment/check/${courseid}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,

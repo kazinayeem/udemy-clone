@@ -10,7 +10,7 @@ type Review = {
   id: string;
   rating: number;
   comment: string | null;
-  approved: boolean; 
+  approved: boolean;
   user: {
     name: string;
     image: string | null;
@@ -53,7 +53,7 @@ export default function TestimonialsSection() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/review/user-review")
+      .get(`${process.env.NEXT_PUBLIC_SERVER}/review/user-review`)
       .then((res) => {
         const approved = res.data.filter((review: Review) => review.approved);
         setTestimonials(approved);

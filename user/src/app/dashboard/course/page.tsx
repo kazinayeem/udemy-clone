@@ -35,7 +35,7 @@ export default function Page() {
       try {
         const token = await getCookie("token");
         const res = await axios.get(
-          "http://localhost:8080/api/enrollment/mycourse",
+          `${process.env.NEXT_PUBLIC_SERVER}/enrollment/mycourse`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

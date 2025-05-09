@@ -66,7 +66,7 @@ export default function ProfilePage() {
       }
 
       const res = await axios.get<User>(
-        "http://localhost:8080/api/user/userid",
+        `${process.env.NEXT_PUBLIC_SERVER}/user/userid`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -123,7 +123,7 @@ export default function ProfilePage() {
       }
 
       const res = await axios.put<User>(
-        `http://localhost:8080/api/user/${user.id}`,
+        `${process.env.NEXT_PUBLIC_SERVER}/user/${user.id}`,
         formData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
