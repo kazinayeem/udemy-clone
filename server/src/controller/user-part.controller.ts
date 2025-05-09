@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import { category, course } from "../config/db";
-import { Prisma } from "../generated/prisma";
+import { Prisma } from "../../generated/prisma";
 
 export const getAllCourse = async (
   req: Request,

@@ -10,8 +10,8 @@ import categoryRoutes from "./routes/category.routes";
 import teacherRoutes from "./routes/teacher.routes";
 import userPartRoutes from "./routes/user-part.routes";
 import enrollmentRoutes from "./routes/enrollment.routes";
-import { generateCourseDescription } from "./controller/ai.controller";
 import reviewRoutes from "./routes/review.routes";
+import { generateCourseDescription } from "./controller/ai.controller";
 const app = express();
 dotenv.config();
 app.use(
@@ -65,10 +65,10 @@ app.use((err: Error, req: Request, res: Response, next: Function) => {
 
 app.listen(port, () => {
   db.$connect()
-    .then(() => {
+    .then((): void => {
       console.log("Connected to the database successfully");
     })
-    .catch((error) => {
+    .catch((error: Error): void => {
       console.error("Error connecting to the database:", error);
     });
 

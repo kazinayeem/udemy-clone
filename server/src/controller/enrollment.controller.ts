@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import { course, enrollment, user } from "../config/db";
-import { Prisma } from "../generated/prisma";
+import { Prisma } from "../../generated/prisma";
 import SSLCommerzPayment from "sslcommerz-lts";
 
 const store_id = "kazi67f0c67596ef9";
