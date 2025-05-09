@@ -50,7 +50,7 @@ export default function AuthPage() {
   const router = useRouter();
   const handleLogin = async (data: LoginType) => {
     dispatch(loginUser(data));
-    router.back();
+    router.push("/")
   };
 
   const handleRegister = async (data: RegisterType) => {

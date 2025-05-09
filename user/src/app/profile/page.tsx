@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
@@ -55,7 +55,7 @@ export default function ProfilePage() {
 
   const router = useRouter();
 
-  const fetchUser = async () => {
+  const fetchUser = useCallback(async () => {
     try {
       setLoading(true);
       const token = await getCookie("token");
@@ -65,28 +65,31 @@ export default function ProfilePage() {
         return;
       }
 
-      const res = await axios.get<User>("http://localhost:8080/api/user/userid", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get<User>(
+        "http://localhost:8080/api/user/userid",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       setUser(res.data);
-      setFormData(res.data); // Initialize formData with user data
+      setFormData(res.data);
     } catch (err) {
       console.error("Failed to fetch user:", err);
       toast.error("Failed to load profile data");
     } finally {
       setLoading(false);
     }
-  };
+  }, [router]);
 
   useEffect(() => {
     fetchUser();
-  }, [router]);
+  }, [fetchUser]);
 
   const handleChange = (field: keyof User, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: undefined }));
+      setErrors((prev) => ({ ...prev, [field]: undefined }));
     }
   };
 
@@ -133,7 +136,9 @@ export default function ProfilePage() {
     } catch (error) {
       console.error("Failed to update user:", error);
       const err = error as AxiosError;
-      const errorMessage = (err.response?.data as { message?: string })?.message || "Failed to update profile";
+      const errorMessage =
+        (err.response?.data as { message?: string })?.message ||
+        "Failed to update profile";
       toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);
@@ -156,7 +161,7 @@ export default function ProfilePage() {
 
       {loading ? (
         <Card className="p-6 space-y-4">
-          {formFields.map(field => (
+          {formFields.map((field) => (
             <div key={field.id} className="space-y-2">
               <Skeleton className="h-4 w-24" />
               <Skeleton className="h-10 w-full" />
@@ -169,7 +174,7 @@ export default function ProfilePage() {
       ) : user ? (
         <Card className="p-6">
           <CardContent className="space-y-6">
-            {formFields.map(field => (
+            {formFields.map((field) => (
               <div key={field.id} className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                   {field.label}
@@ -181,7 +186,7 @@ export default function ProfilePage() {
                     {field.type === "textarea" ? (
                       <textarea
                         value={getFieldValue(field.id)}
-                        onChange={e => handleChange(field.id, e.target.value)}
+                        onChange={(e) => handleChange(field.id, e.target.value)}
                         placeholder={`Enter ${field.label.toLowerCase()}`}
                         className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                         rows={3}
@@ -190,7 +195,7 @@ export default function ProfilePage() {
                       <Input
                         type={field.type || "text"}
                         value={getFieldValue(field.id)}
-                        onChange={e => handleChange(field.id, e.target.value)}
+                        onChange={(e) => handleChange(field.id, e.target.value)}
                         placeholder={`Enter ${field.label.toLowerCase()}`}
                         className={errors[field.id] ? "border-red-500" : ""}
                       />

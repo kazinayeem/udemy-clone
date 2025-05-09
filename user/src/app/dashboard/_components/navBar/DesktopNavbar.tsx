@@ -14,7 +14,6 @@ import {
   HomeIcon,
   BookIcon,
   UserIcon,
-  SettingsIcon,
   PhoneIcon,
   LogOutIcon,
 } from "lucide-react";

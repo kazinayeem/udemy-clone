@@ -21,7 +21,6 @@ export default function AuthProvider({ children }: AuthProviderProps) {
       if (!token) {
         await deleteCookie("token");
         dispatch(logout());
-        router.replace("/auth");
         return;
       }
 
@@ -32,7 +31,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     };
 
     checkAuth();
-  }, [dispatch]);
+  }, [dispatch, router]);
 
   return <>{children}</>;
 }

@@ -8,7 +8,6 @@ import {
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
@@ -66,8 +65,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ courseId }) => {
         } else {
           setUserReview(null);
         }
-      } catch (err) {
-        console.error("Error fetching reviews:", err);
+      } catch {
         setReviews([]);
         setUserReview(null);
       } finally {
@@ -77,6 +75,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ courseId }) => {
 
     fetchReviews();
   }, [courseId]);
+  console.log(reviews);
 
   // Submit review
   const handleReviewSubmit = async (e: React.FormEvent) => {
@@ -103,7 +102,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ courseId }) => {
       setReviewError(null);
       setReviewText("");
       setRating(1);
-    } catch (err) {
+    } catch {
       setReviewError("Error submitting review.");
       setReviewSuccess(null);
     }
