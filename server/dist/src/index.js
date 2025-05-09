@@ -15,17 +15,12 @@ const category_routes_1 = __importDefault(require("./routes/category.routes"));
 const teacher_routes_1 = __importDefault(require("./routes/teacher.routes"));
 const user_part_routes_1 = __importDefault(require("./routes/user-part.routes"));
 const enrollment_routes_1 = __importDefault(require("./routes/enrollment.routes"));
-const ai_controller_1 = require("./controller/ai.controller");
 const review_routes_1 = __importDefault(require("./routes/review.routes"));
+const ai_controller_1 = require("./controller/ai.controller");
 const app = (0, express_1.default)();
 dotenv_1.default.config();
 app.use((0, cors_1.default)({
-    origin: [
-        "http://localhost:5173",
-        "http://localhost:3000",
-        "http://192.168.0.104:3000",
-        "http://192.168.0.104:5173",
-    ],
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
 }));
 app.use((0, express_fileupload_1.default)({

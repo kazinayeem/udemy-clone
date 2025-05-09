@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkEnrollmentStatus = exports.getMyCourseById = exports.MyEnrollmentCourse = exports.cancel = exports.failed = exports.success = exports.courseEnrollment = void 0;
 const db_1 = require("../config/db");
-const prisma_1 = require("../generated/prisma");
+const prisma_1 = require("../../generated/prisma");
 const sslcommerz_lts_1 = __importDefault(require("sslcommerz-lts"));
 const store_id = "kazi67f0c67596ef9";
 const store_passwd = "kazi67f0c67596ef9@ssl";
