@@ -47,6 +47,7 @@ export default function Lessons() {
       {/* Go to Course Page */}
       <div className="mb-6">
         <Link
+          viewTransition
           to={`/teacher/course/course-details/${courseId}`}
           className="inline-block text-blue-600 hover:text-blue-800 font-semibold"
         >

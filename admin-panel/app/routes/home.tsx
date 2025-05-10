@@ -3,8 +3,8 @@ import type { Route } from "./+types/home";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Welcome | React App" },
-    { name: "description", content: "Welcome to our React app landing page." },
+    { title: "Admin Panel" },
+    { name: "description", content: "Welcome to My Admin Pandel" },
   ];
 }
 
@@ -43,12 +43,14 @@ export default function Home() {
             </ul>
             <div className="flex justify-between mt-6 gap-2">
               <Link
+                viewTransition
                 to="/login"
                 className="flex-1 text-center px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
               >
                 Login
               </Link>
               <Link
+                viewTransition
                 to="/register"
                 className="flex-1 text-center px-4 py-2 rounded-lg bg-gray-300 dark:bg-gray-700 text-black dark:text-white hover:bg-gray-400 dark:hover:bg-gray-600 transition"
               >

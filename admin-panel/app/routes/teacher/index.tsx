@@ -20,7 +20,7 @@ export default function Index() {
     <div className="max-w-7xl mx-auto px-4 py-6 grid grid-cols-1 sm:grid-cols-3 gap-6">
       {/* Card 1 - Your Courses */}
       <Card className="rounded-2xl shadow-md">
-        <Link to={"/teacher/course/show-courses"}>
+        <Link to={"/teacher/course/show-courses"} viewTransition>
           <CardContent className="p-6">
             <h2 className="text-lg font-medium text-gray-700 mb-1">
               Your Courses

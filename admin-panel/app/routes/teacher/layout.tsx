@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Outlet, useNavigate } from "react-router";
+import { Outlet, ScrollRestoration, useNavigate } from "react-router";
 import DesktopNavbar from "~/navbar/_components/desktop-navbar";
 import Navbar from "~/navbar/Navbar";
 import { logout, setUser } from "~/redux/reducer/authSlice";
@@ -52,7 +52,7 @@ export default function DashboardLayout() {
       <div className="z-50">
         <Navbar />
       </div>
-
+      <ScrollRestoration />
       {/* Main content behind navbar when opened */}
       <main className="flex-1 pt-20 md:pt-0 z-0">
           <DesktopNavbar />

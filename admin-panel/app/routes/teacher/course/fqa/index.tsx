@@ -64,6 +64,7 @@ export default function FAQManager() {
   return (
     <div className="max-w-3xl mx-auto p-4 space-y-6">
       <Link
+        viewTransition
         to={`/teacher/course/course-details/${courseId}`}
         className="text-blue-600 hover:underline"
       >

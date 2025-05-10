@@ -23,7 +23,7 @@ export default function AllCourse() {
   const navigate = useNavigate();
 
   const handleEdit = (id: string) => {
-    navigate(`/teacher/course/course-details/${id}`);
+    navigate(`/teacher/course/course-details/${id}`, { viewTransition: true });
   };
 
   const handleDelete = (id: string) => {

@@ -25,10 +25,7 @@ interface Course {
 
 export default async function HomePageCourse() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER}/client/courses?limit=4`,
-    {
-      cache: "no-store",
-    }
+    `${process.env.NEXT_PUBLIC_SERVER}/client/courses?limit=4`
   );
   const json = await res.json();
   const courses: Course[] = json.data || [];

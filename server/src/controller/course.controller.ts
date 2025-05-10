@@ -136,7 +136,7 @@ export const getAllFAQs = async (
 
     const faqs = await fQA.findMany({
       where: { courseId },
-      orderBy: { createdAt: "desc" },
+      orderBy: { createdAt: "asc" },
     });
 
     res.status(200).json({
@@ -168,8 +168,11 @@ export const GetCoursebyId = async (
         user: true,
         lessons: true,
         Chapter: {
+          orderBy: { createdAt: "asc" },
           include: {
-            lessons: true,
+            lessons: {
+              orderBy: { createdAt: "asc" },
+            },
           },
         },
       },

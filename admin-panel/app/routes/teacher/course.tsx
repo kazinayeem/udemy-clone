@@ -8,6 +8,7 @@ export default function AddCourse() {
 
       <div className="flex gap-4">
         <Link
+          viewTransition
           to="/teacher/course/add-course"
           className="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
         >
@@ -15,6 +16,7 @@ export default function AddCourse() {
         </Link>
 
         <Link
+          viewTransition
           to="/teacher/course/show-courses"
           className="inline-block bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition"
         >

@@ -27,10 +27,6 @@ export default function CourseDetails() {
     data?.language,
   ];
 
-  const navigate = useNavigate();
-  const goToLessons = () => {
-    navigate(`/teacher/course/course-details/${courseId}/lessons/${courseId}`);
-  };
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
   const completionText = `${completedFields}/${totalFields}`;
@@ -53,6 +49,7 @@ export default function CourseDetails() {
   return (
     <div className="p-6">
       <Link
+        viewTransition
         to="/teacher/course/show-courses"
         className="inline-flex items-center gap-2 px-4 py-2 rounded transition"
       >
@@ -62,6 +59,7 @@ export default function CourseDetails() {
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold ml-6">Course Details</h1>
         <Link
+          viewTransition
           className="inline-block px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold transition duration-200"
           to={`/teacher/course/course-details/${courseId}/fqa/`}
         >

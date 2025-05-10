@@ -1,5 +1,10 @@
 "use client";
-
+import {
+  VerticalTimeline,
+  VerticalTimelineElement,
+} from "react-vertical-timeline-component";
+import "react-vertical-timeline-component/style.min.css";
+import { BookOpen, Video } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -17,6 +22,8 @@ import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import { getCookie } from "@/app/auth/action";
 import Loading from "./loading";
+import CourseTimeline from "./_components/CourseTimeline";
+import CourseDescription from "./_components/CourseDescriptio";
 
 interface FAQ {
   id: string;
@@ -66,7 +73,6 @@ export default function CoursePage() {
     const fetchData = async () => {
       const token = await getCookie("token");
       setIsLoggedIn(!!token);
-
       try {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_SERVER}/client/course/${courseid}`,
@@ -110,10 +116,10 @@ export default function CoursePage() {
   );
 
   return (
-    <div className="bg-gradient-to-b from-cyan-100/70 min-h-screen">
+    <div className="bg-gradient-to-b from-cyan-100/70 min-h-screen m-auto">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 py-12">
-        {/* Right Sidebar */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Right section: Course details card */}
           <div className="order-1 md:order-2 bg-white rounded-lg shadow-lg p-6 h-[480px]">
             <Image
               src={courseData.image}
@@ -153,26 +159,14 @@ export default function CoursePage() {
                 <Button className="w-full mb-6">Go To course Dashboard</Button>
               </Link>
             )}
-
-            {/* <h3 className="font-semibold text-lg mb-4">
-              What&apos;s in the course?
-            </h3>
-            <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
-              <li>Lifetime access with free updates</li>
-              <li>Step-by-step, hands-on project guidance</li>
-              <li>Real-world examples and tools</li>
-            </ul> */}
           </div>
 
-          {/* Left Content */}
+          {/* Left section: Course content */}
           <div className="order-2 md:order-1 md:col-span-2">
             <h1 className="p-2 text-2xl font-extrabold mb-4">
               {courseData.title}
             </h1>
-            <p
-              className="p-6 text-gray-800 leading-relaxed mb-8 tracking-wide text-base/8"
-              dangerouslySetInnerHTML={{ __html: courseData.description || "" }}
-            ></p>
+            <CourseDescription description={courseData.description} />
 
             <div className="p-6 flex flex-wrap items-center gap-3 text-sm mb-4 text-muted-foreground">
               <span>⭐ 3</span>
@@ -186,60 +180,10 @@ export default function CoursePage() {
                 {courseData.instructor.name}
               </span>
             </p>
-
-            <h2 className="text-xl font-semibold mb-4 p-6">Course Structure</h2>
-            <Accordion type="multiple" className="w-full p-6">
-              {courseData.chapters.map((chapter) => (
-                <AccordionItem value={chapter.id} key={chapter.id}>
-                  <AccordionTrigger>
-                    <div className="flex justify-between items-center w-full">
-                      <span>{chapter.title}</span>
-                      <span className="flex items-center gap-1 text-sm text-muted-foreground">
-                        📚 {chapter.lessons.length}
-                      </span>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    {chapter.lessons.length === 0 ? (
-                      <p className="text-muted-foreground text-sm">
-                        No lessons available.
-                      </p>
-                    ) : (
-                      chapter.lessons.map((lesson) => (
-                        <div
-                          key={lesson.id}
-                          className="py-4 px-5 bg-white rounded-lg shadow-sm mb-4 hover:shadow-md transition duration-300"
-                        >
-                          <h4 className="text-lg font-semibold text-gray-800">
-                            {lesson.title}
-                          </h4>
-                          {!lesson.isFree && (
-                            <div className="flex items-center mt-2 text-gray-500">
-                              <Lock className="mr-2 text-red-500" />
-                              <span className="text-sm">
-                                This lesson is locked
-                              </span>
-                            </div>
-                          )}
-                          {lesson.isFree &&
-                            lesson.video?.includes("youtube.com") && (
-                              <div className="mt-3">
-                                <Suspense fallback={<h1>Loading...</h1>}>
-                                  <FreePreviewButton videoUrl={lesson.video} />
-                                </Suspense>
-                              </div>
-                            )}
-                        </div>
-                      ))
-                    )}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+            <CourseTimeline chapters={courseData.chapters} />
           </div>
         </div>
       </div>
-
       <CourseFAQAccordion fqa={courseData.fqa} />
     </div>
   );

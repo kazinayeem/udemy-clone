@@ -62,7 +62,9 @@ const ChapterForm: React.FC<ChapterProps> = ({ chapters, courseId }) => {
   const navigate = useNavigate();
 
   const handleEdit = (lessonId: string) => {
-    navigate(`/teacher/course/course-details/${courseId}/lessons/${lessonId}`);
+    navigate(`/teacher/course/course-details/${courseId}/lessons/${lessonId}`, {
+      viewTransition: true,
+    });
   };
 
   const handleAddChapter = async () => {
@@ -92,7 +94,7 @@ const ChapterForm: React.FC<ChapterProps> = ({ chapters, courseId }) => {
         setNewLesson({
           ...newLesson,
           title: "",
-          chapterId: "", 
+          chapterId: "",
         });
       } catch (error) {
         toast.error("Failed to add lesson");

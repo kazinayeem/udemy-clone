@@ -17,6 +17,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 }) => {
   return (
     <NavLink
+      viewTransition
       to={`${link}`}
       className={cn(
         "flex items-center w-full p-3 rounded-lg transition-colors",

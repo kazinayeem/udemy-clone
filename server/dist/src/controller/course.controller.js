@@ -124,7 +124,7 @@ const getAllFAQs = async (req, res) => {
         }
         const faqs = await db_1.fQA.findMany({
             where: { courseId },
-            orderBy: { createdAt: "desc" },
+            orderBy: { createdAt: "asc" },
         });
         res.status(200).json({
             success: true,
@@ -153,8 +153,11 @@ const GetCoursebyId = async (req, res) => {
                 user: true,
                 lessons: true,
                 Chapter: {
+                    orderBy: { createdAt: "asc" },
                     include: {
-                        lessons: true,
+                        lessons: {
+                            orderBy: { createdAt: "asc" },
+                        },
                     },
                 },
             },

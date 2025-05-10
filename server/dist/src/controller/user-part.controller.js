@@ -24,6 +24,7 @@ const getAllCourse = async (req, res) => {
         };
         const [courses, total] = await Promise.all([
             db_1.course.findMany({
+                orderBy: { createdAt: "desc" },
                 where: commonWhere,
                 select: {
                     id: true,
@@ -83,8 +84,10 @@ const getCourseDetailsById = async (req, res) => {
                 reviews: true,
                 fqa: true,
                 Chapter: {
+                    orderBy: { createdAt: "asc" },
                     include: {
                         lessons: {
+                            orderBy: { createdAt: "asc" },
                             where: {
                                 isPublished: true,
                             },
