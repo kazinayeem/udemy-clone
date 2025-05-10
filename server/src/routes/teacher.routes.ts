@@ -19,12 +19,15 @@ import {
   courseApproved,
   courseUnApproved,
   getAllCourse,
+  getSalesReportForTeacher,
+  getStudentsForTeacher,
 } from "../controller/teacher.controller";
 import { checkAdmin } from "../middleware/checkAdmin";
+import { checkLogin } from "../middleware/checkLogin";
 const router = express.Router();
-router.get("/all-course", checkAdmin,getAllCourse);
-router.put("/course/approved/:courseId", checkAdmin,courseApproved);
-router.put("/course/unapproved/:courseId",checkAdmin, courseUnApproved);
+router.get("/all-course", checkAdmin, getAllCourse);
+router.put("/course/approved/:courseId", checkAdmin, courseApproved);
+router.put("/course/unapproved/:courseId", checkAdmin, courseUnApproved);
 router.get("/all-teachers", checkAdmin, getAllTeachers);
 router.get("/all-students", checkAdmin, getAllStudents);
 router.get("/teacher/:id", checkAdmin, getTeacherById);
@@ -45,5 +48,6 @@ router.get("/total-courses", checkAdmin, totalCourses);
 router.get("/monthly-sales", checkAdmin, getMonthlySales);
 router.get("/total-sales", checkAdmin, getTotalSales);
 router.get("/course-enrollments", checkAdmin, getCourseEnrollments);
-
+router.get("/sales-report-for-teacher", checkLogin, getSalesReportForTeacher);
+router.get("/students", checkLogin, getStudentsForTeacher);
 export default router;

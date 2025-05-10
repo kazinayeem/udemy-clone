@@ -17,6 +17,7 @@ import { Skeleton } from "~/components/ui/skeleton";
 import { Button } from "~/components/ui/button";
 import { CheckCircle, XCircle, Eye } from "lucide-react";
 import { toast } from "react-hot-toast";
+import { Input } from "~/components/ui/input"; // Assuming ShadCN input component
 
 interface Teacher {
   id: string;
@@ -34,6 +35,11 @@ export default function GetAllTeachers() {
   const [unBannedTeacher] = useUnBannedTeacherMutation();
   const [viewTeacher, setViewTeacher] = useState<Teacher | null>(null);
 
+  const [searchName, setSearchName] = useState<string>("");
+  const [searchEmail, setSearchEmail] = useState<string>("");
+  const [searchRole, setSearchRole] = useState<string>("");
+  const [searchStatus, setSearchStatus] = useState<boolean | null>(null);
+
   const handleBanUnban = async (teacherId: string, isActive: boolean) => {
     try {
       if (isActive) {
@@ -48,6 +54,19 @@ export default function GetAllTeachers() {
       toast.error("Failed to update teacher status");
     }
   };
+
+  // Filter teachers based on search inputs
+  const filteredTeachers = data?.filter((teacher: Teacher) => {
+    return (
+      (teacher.name.toLowerCase().includes(searchName.toLowerCase()) ||
+        searchName === "") &&
+      (teacher.email.toLowerCase().includes(searchEmail.toLowerCase()) ||
+        searchEmail === "") &&
+      (teacher.role.toLowerCase().includes(searchRole.toLowerCase()) ||
+        searchRole === "") &&
+      (searchStatus === null || teacher.isActive === searchStatus)
+    );
+  });
 
   if (isLoading) {
     return (
@@ -72,6 +91,55 @@ export default function GetAllTeachers() {
       <Card>
         <CardContent className="p-4">
           <h2 className="text-xl font-semibold mb-4">All Students</h2>
+
+          {/* Advanced Search Filters */}
+          <div className="mb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div>
+              <label className="block mb-2">Search by Name</label>
+              <Input
+                type="text"
+                placeholder="Enter name"
+                value={searchName}
+                onChange={(e) => setSearchName(e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="block mb-2">Search by Email</label>
+              <Input
+                type="email"
+                placeholder="Enter email"
+                value={searchEmail}
+                onChange={(e) => setSearchEmail(e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="block mb-2">Search by Role</label>
+              <Input
+                type="text"
+                placeholder="Enter role"
+                value={searchRole}
+                onChange={(e) => setSearchRole(e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="block mb-2">Filter by Status</label>
+              <select
+                className="w-full p-2 border rounded-md"
+                value={searchStatus !== null ? String(searchStatus) : ""}
+                onChange={(e) =>
+                  setSearchStatus(
+                    e.target.value === "" ? null : e.target.value === "true"
+                  )
+                }
+              >
+                <option value="">All Statuses</option>
+                <option value="true">Active</option>
+                <option value="false">Inactive</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Teachers Table */}
           <Table>
             <TableHeader>
               <TableRow>
@@ -83,7 +151,7 @@ export default function GetAllTeachers() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data?.map((teacher: Teacher) => (
+              {filteredTeachers?.map((teacher: Teacher) => (
                 <TableRow key={teacher.id}>
                   <TableCell>{teacher.name}</TableCell>
                   <TableCell>{teacher.email}</TableCell>

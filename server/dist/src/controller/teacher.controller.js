@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getCourseEnrollments = exports.getTotalSales = exports.getMonthlySales = exports.totalCourses = exports.getSalesReport = exports.getStudentCourses = exports.getStudentByEmail = exports.getStudentById = exports.getAllStudents = exports.getTeacherByEmail = exports.getTeacherCoursesById = exports.getTeacherCourses = exports.getTeacherById = exports.getAllTeachers = exports.unBannedTecher = exports.bannedTecher = exports.getAllCourse = exports.courseUnApproved = exports.courseApproved = void 0;
+exports.getStudentsForTeacher = exports.getSalesReportForTeacher = exports.getCourseEnrollments = exports.getTotalSales = exports.getMonthlySales = exports.totalCourses = exports.getSalesReport = exports.getStudentCourses = exports.getStudentByEmail = exports.getStudentById = exports.getAllStudents = exports.getTeacherByEmail = exports.getTeacherCoursesById = exports.getTeacherCourses = exports.getTeacherById = exports.getAllTeachers = exports.unBannedTecher = exports.bannedTecher = exports.getAllCourse = exports.courseUnApproved = exports.courseApproved = void 0;
 const db_1 = require("../config/db");
 const date_fns_1 = require("date-fns");
 const courseApproved = async (req, res) => {
@@ -467,3 +467,87 @@ const getCourseEnrollments = async (req, res) => {
     }
 };
 exports.getCourseEnrollments = getCourseEnrollments;
+const getSalesReportForTeacher = async (req, res) => {
+    const teacherId = req.user?.id;
+    try {
+        const teacher = await db_1.user.findUnique({
+            where: {
+                id: teacherId,
+            },
+            include: {
+                course: {
+                    include: {
+                        enrollments: true,
+                    },
+                },
+            },
+        });
+        if (!teacher || teacher.role !== "TEACHER") {
+            res.status(404).json({ message: "Teacher not found" });
+            return;
+        }
+        // Construct a simplified report
+        const report = teacher.course.map((course) => ({
+            courseId: course.id,
+            title: course.title,
+            price: course.price, // Assuming course has a price field
+            totalEnrollments: course.enrollments.length,
+            totalEarnings: (course.price ?? 0) * course.enrollments.length,
+        }));
+        // Optional: compute overall totals
+        const totals = report.reduce((acc, curr) => {
+            acc.totalEnrollments += curr.totalEnrollments;
+            acc.totalEarnings += curr.totalEarnings;
+            return acc;
+        }, { totalEnrollments: 0, totalEarnings: 0 });
+        res.status(200).json({ report, totals });
+    }
+    catch (error) {
+        console.error("Error fetching teacher sales report:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+exports.getSalesReportForTeacher = getSalesReportForTeacher;
+const getStudentsForTeacher = async (req, res) => {
+    const teacherId = req.user?.id;
+    if (!teacherId) {
+        res.status(401).json({ message: "Unauthorized" });
+        return;
+    }
+    try {
+        const courses = await db_1.course.findMany({
+            where: { userId: teacherId },
+            select: {
+                id: true,
+                title: true,
+                enrollments: {
+                    select: {
+                        user: {
+                            select: {
+                                id: true,
+                                name: true,
+                                email: true,
+                                image: true,
+                                country: true,
+                                phone: true,
+                                address: true,
+                                isActive: true,
+                            },
+                        },
+                    },
+                },
+            },
+        });
+        const students = courses.flatMap((course) => course.enrollments.map((enrollment) => ({
+            courseId: course.id,
+            courseTitle: course.title,
+            student: enrollment.user,
+        })));
+        res.status(200).json({ students });
+    }
+    catch (error) {
+        console.error("Error fetching students for teacher:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+exports.getStudentsForTeacher = getStudentsForTeacher;

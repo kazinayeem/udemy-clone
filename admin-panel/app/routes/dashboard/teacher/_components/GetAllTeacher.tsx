@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import {
-  useGetAllStudentsQuery,
+  useGetAllTeachersQuery,
   useBannedTeacherMutation,
   useUnBannedTeacherMutation,
-  useGetAllTeachersQuery,
 } from "~/redux/api/adminApi";
 import {
   Table,
@@ -18,6 +17,7 @@ import { Skeleton } from "~/components/ui/skeleton";
 import { Button } from "~/components/ui/button";
 import { CheckCircle, XCircle, Eye } from "lucide-react";
 import { toast } from "react-hot-toast";
+import { Input } from "~/components/ui/input";
 
 interface Teacher {
   id: string;
@@ -26,7 +26,7 @@ interface Teacher {
   role: string;
   isActive: boolean;
   bio?: string;
-  course?: any[];
+  course?: string[]; // Assuming it's an array of course names
 }
 
 export default function GetAllTeachers() {
@@ -34,6 +34,9 @@ export default function GetAllTeachers() {
   const [bannedTeacher] = useBannedTeacherMutation();
   const [unBannedTeacher] = useUnBannedTeacherMutation();
   const [viewTeacher, setViewTeacher] = useState<Teacher | null>(null);
+
+  // Search State
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleBanUnban = async (teacherId: string, isActive: boolean) => {
     try {
@@ -49,6 +52,21 @@ export default function GetAllTeachers() {
       toast.error("Failed to update teacher status");
     }
   };
+
+  const filteredTeachers = data?.filter((teacher: Teacher) => {
+    const query = searchQuery.toLowerCase();
+    const isNameMatch = teacher.name.toLowerCase().includes(query);
+    const isEmailMatch = teacher.email.toLowerCase().includes(query);
+
+    const isCourseMatch =
+      Array.isArray(teacher.course) &&
+      teacher.course.some(
+        (course) =>
+          typeof course === "string" && course.toLowerCase().includes(query)
+      );
+
+    return isNameMatch || isEmailMatch || isCourseMatch;
+  });
 
   if (isLoading) {
     return (
@@ -70,9 +88,20 @@ export default function GetAllTeachers() {
 
   return (
     <div className="space-y-6">
+      {/* Search Bar */}
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-semibold">All Teachers</h2>
+        <Input
+          type="search"
+          placeholder="Search teachers..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="border p-2 rounded-md w-1/3"
+        />
+      </div>
+
       <Card>
         <CardContent className="p-4">
-          <h2 className="text-xl font-semibold mb-4">All Teachers</h2>
           <Table>
             <TableHeader>
               <TableRow>
@@ -84,7 +113,7 @@ export default function GetAllTeachers() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data?.map((teacher: Teacher) => (
+              {filteredTeachers?.map((teacher: Teacher) => (
                 <TableRow key={teacher.id}>
                   <TableCell>{teacher.name}</TableCell>
                   <TableCell>{teacher.email}</TableCell>
@@ -145,8 +174,7 @@ export default function GetAllTeachers() {
             <strong>Role:</strong> {viewTeacher.role}
           </div>
           <div>
-            <strong>Total Course:</strong>{" "}
-            {viewTeacher.course?.length || 0}
+            <strong>Total Course:</strong> {viewTeacher.course?.length || 0}
           </div>
           <div>
             <strong>Bio:</strong> {viewTeacher.bio || "Not available"}

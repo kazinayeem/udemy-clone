@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const teacher_controller_1 = require("../controller/teacher.controller");
 const checkAdmin_1 = require("../middleware/checkAdmin");
+const checkLogin_1 = require("../middleware/checkLogin");
 const router = express_1.default.Router();
 router.get("/all-course", checkAdmin_1.checkAdmin, teacher_controller_1.getAllCourse);
 router.put("/course/approved/:courseId", checkAdmin_1.checkAdmin, teacher_controller_1.courseApproved);
@@ -26,4 +27,6 @@ router.get("/total-courses", checkAdmin_1.checkAdmin, teacher_controller_1.total
 router.get("/monthly-sales", checkAdmin_1.checkAdmin, teacher_controller_1.getMonthlySales);
 router.get("/total-sales", checkAdmin_1.checkAdmin, teacher_controller_1.getTotalSales);
 router.get("/course-enrollments", checkAdmin_1.checkAdmin, teacher_controller_1.getCourseEnrollments);
+router.get("/sales-report-for-teacher", checkLogin_1.checkLogin, teacher_controller_1.getSalesReportForTeacher);
+router.get("/students", checkLogin_1.checkLogin, teacher_controller_1.getStudentsForTeacher);
 exports.default = router;

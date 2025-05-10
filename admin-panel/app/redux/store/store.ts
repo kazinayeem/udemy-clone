@@ -6,6 +6,7 @@ import { userApi } from "../api/userApi";
 import { studentAndTeacherApi } from "../api/adminApi";
 import { categoryApi } from "../api/categoryApi";
 import { reviewApi } from "../api/reviewApi";
+import { teacherApi } from "../api/teacherApi";
 const store = configureStore({
   reducer: {
     auth: AuthReducer,
@@ -14,12 +15,14 @@ const store = configureStore({
     [studentAndTeacherApi.reducerPath]: studentAndTeacherApi.reducer,
     [categoryApi.reducerPath]: categoryApi.reducer,
     [reviewApi.reducerPath]: reviewApi.reducer,
+    [teacherApi.reducerPath]: teacherApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(courseApi.middleware)
       .concat(userApi.middleware)
       .concat(categoryApi.middleware)
+      .concat(teacherApi.middleware)
       .concat(studentAndTeacherApi.middleware)
       .concat(reviewApi.middleware),
   devTools: process.env.NODE_ENV !== "production",

@@ -30,6 +30,7 @@ export default [
     layout("routes/teacher/layout.tsx", [
       index("routes/teacher/index.tsx"),
       route("profile", "routes/teacher/profile/profile.tsx"),
+      route("students", "routes/teacher/students/index.tsx"),
       route("course", "routes/teacher/course.tsx"),
       route(
         "/course/add-course",

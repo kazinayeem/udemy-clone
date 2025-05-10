@@ -1,18 +1,20 @@
 import {
   BarChart,
   Bar,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  Legend,
 } from "recharts";
 import { Loader2 } from "lucide-react";
 import { useGetMonthlySalesQuery } from "~/redux/api/adminApi";
 import { Card, CardContent } from "~/components/ui/card";
 
 const MonthlySalesChart = () => {
-  // Fetch monthly sales data using RTK Query hook
   const { data, error, isLoading } = useGetMonthlySalesQuery({});
 
   if (isLoading) {
@@ -53,7 +55,15 @@ const MonthlySalesChart = () => {
             <XAxis dataKey="month" />
             <YAxis />
             <Tooltip />
+            <Legend />
             <Bar dataKey="totalSales" fill="#22c55e" radius={[4, 4, 0, 0]} />
+            <Line
+              type="monotone"
+              dataKey="previousYearSales"
+              stroke="#3b82f6"
+              strokeWidth={2}
+              dot={{ r: 3 }}
+            />
           </BarChart>
         </ResponsiveContainer>
       </CardContent>

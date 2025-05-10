@@ -51,18 +51,18 @@ export const teacherRoutes = [
     link: "/teacher/course",
   },
   {
-    label: "Settings",
+    label: "Show Course",
+    icon: <User size={18} />,
+    link: "/teacher/course/show-courses",
+  },
+  {
+    label: "My Students",
     icon: <Settings size={18} />,
-    link: "/teacher/settings",
+    link: "/teacher/students",
   },
   {
     label: "Profile",
     icon: <User size={18} />,
     link: "/teacher/profile",
-  },
-  {
-    label: "Course Management",
-    icon: <User size={18} />,
-    link: "/teacher/course-management",
   },
 ];

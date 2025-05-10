@@ -182,8 +182,8 @@ const CoursePage = () => {
               <Card className="w-full h-[320px] flex flex-col overflow-hidden">
                 <div className="relative w-full h-48">
                   <Image
-                    src={course.image}
-                    alt={course.title}
+                    src={course?.image}
+                    alt={course?.title}
                     width={300}
                     height={192}
                     objectFit="cover"
@@ -192,19 +192,19 @@ const CoursePage = () => {
                 </div>
                 <CardContent className="flex-1 p-4 flex flex-col">
                   <CardTitle className="text-sm font-semibold mb-1 line-clamp-2">
-                    {course.title}
+                    {course?.title}
                   </CardTitle>
                   <CardDescription className="text-xs text-gray-500 mb-2 line-clamp-1">
-                    {course.category.name}
+                    {course?.category?.name}
                   </CardDescription>
                   <div className="flex items-center text-xs text-gray-600 space-x-4 mt-auto">
                     <div className="flex items-center">
                       <LucideDollarSign className="w-4 h-4 mr-1" />$
-                      {course.price}
+                      {course?.price}
                     </div>
                     <div className="flex items-center">
                       <LucideClock className="w-4 h-4 mr-1" />
-                      {course.duration}h
+                      {course?.duration}h
                     </div>
                   </div>
                 </CardContent>

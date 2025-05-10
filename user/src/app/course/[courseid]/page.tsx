@@ -119,7 +119,7 @@ export default function CoursePage() {
             </p>
             <div className="flex items-center gap-3 mb-4">
               <span className="text-2xl font-bold">
-                ${courseData.price.toFixed(2)}
+                ${courseData?.price?.toFixed(2)}
               </span>
               <span className="line-through text-gray-400">$69.99</span>
               <span className="text-green-600 text-sm font-semibold">
@@ -128,7 +128,7 @@ export default function CoursePage() {
             </div>
             <div className="flex flex-wrap items-center text-sm text-muted-foreground gap-4 mb-4">
               <span>⭐ 3</span>
-              <span>⏱️ {courseData.duration} hours</span>
+              <span>⏱️ {courseData?.duration} hours</span>
               <span>📚 {totalLessons} lessons</span>
             </div>
 
