@@ -1,21 +1,7 @@
 "use client";
-import {
-  VerticalTimeline,
-  VerticalTimelineElement,
-} from "react-vertical-timeline-component";
-import "react-vertical-timeline-component/style.min.css";
-import { BookOpen, Video } from "lucide-react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import FreePreviewButton from "./_components/FreePreviewButton";
-import { Suspense, useEffect, useState } from "react";
-import { Lock } from "lucide-react";
+import { useEffect, useState } from "react";
 import CourseFAQAccordion from "./_components/CourseFAQ";
 import Link from "next/link";
 import axios from "axios";

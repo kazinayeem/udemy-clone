@@ -58,7 +58,7 @@ const CoursePage = () => {
         const res = await fetch(
           `${
             process.env.NEXT_PUBLIC_SERVER
-          }/client/courses?page=${currentPage}&limit=10&search=${search || ""}`
+          }/client/courses?page=${currentPage}&limit=8&search=${search || ""}`
         );
         const data = await res.json();
 

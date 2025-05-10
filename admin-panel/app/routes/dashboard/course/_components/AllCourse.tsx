@@ -17,6 +17,7 @@ import { Skeleton } from "~/components/ui/skeleton";
 import { Button } from "~/components/ui/button";
 import { toast } from "react-hot-toast";
 import { CheckCircle, XCircle } from "lucide-react";
+import { Link } from "react-router";
 
 export default function AllCourse() {
   const { data, isLoading, isError, refetch } = useGetAllCourseQuery({});
@@ -73,13 +74,14 @@ export default function AllCourse() {
                 <TableHead>Level</TableHead>
                 <TableHead>Price</TableHead>
                 <TableHead>Status</TableHead>
+                <TableHead>View</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {data?.map((course: any) => (
                 <TableRow key={course.id}>
-                  <TableCell>{course.title}</TableCell>
+                  <TableCell>{course.title.slice(0, 20)}..</TableCell>
                   <TableCell>{course.user?.name || "Unknown"}</TableCell>
                   <TableCell>{course.language}</TableCell>
                   <TableCell>{course.level}</TableCell>
@@ -115,6 +117,14 @@ export default function AllCourse() {
                         </>
                       )}
                     </Button>
+                  </TableCell>
+                  <TableCell>
+                    <Link
+                      viewTransition
+                      to={`/dashboard/course-management/details/${course.id}`}
+                    >
+                      View
+                    </Link>
                   </TableCell>
                 </TableRow>
               ))}

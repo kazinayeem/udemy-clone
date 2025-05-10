@@ -26,7 +26,7 @@ export default function CourseTimeline({ chapters }: Props) {
     <div className="px-4 sm:px-6 mb-8 max-w-7xl mx-auto">
       <h2 className="text-xl font-semibold mb-4 p-6 text-center">Course Structure</h2>
       <VerticalTimeline lineColor="#e5e7eb" className="mx-auto">
-        {chapters.map((chapter, chapterIndex) => (
+        {chapters.map((chapter) => (
           <VerticalTimelineElement
             key={chapter.id}
             className="vertical-timeline-element--work"

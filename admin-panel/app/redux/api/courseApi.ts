@@ -10,7 +10,7 @@ export const courseApi = createApi({
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }
-      return headers;
+      return headers; 
     },
   }),
   tagTypes: ["Course"],

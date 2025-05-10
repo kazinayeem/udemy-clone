@@ -41,4 +41,4 @@ router.post("/course/:courseId/fqa", createFeq);
 router.put("/course/faq/:faqId", updateFaq);
 router.delete("/course/faq/:faqId", deleteFaq);
 router.put("/course/image/upload", uploadImage);
-export default router;
+export default router; 
