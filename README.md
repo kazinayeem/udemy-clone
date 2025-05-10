@@ -1,5 +1,12 @@
 # Edemy - An AI-Powered Online Learning Platform
 
+
+Check out the live demo of my project in this YouTube video! 👇
+
+[![Watch the demo](https://img.youtube.com/vi/KD7qnkEO5Qo/hqdefault.jpg)](https://youtu.be/KD7qnkEO5Qo)
+
+🔗 **YouTube Video:** [https://youtu.be/KD7qnkEO5Qo](https://youtu.be/KD7qnkEO5Qo)
+
 Edemy is an AI-powered online learning platform, similar to Udemy, designed for both instructors and students. It allows instructors to create and manage courses, while students can browse and purchase courses. The platform also leverages **Gemini AI** for automatically generating course descriptions.
 
 ## Features

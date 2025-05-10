@@ -49,8 +49,12 @@ export default function AuthPage() {
   });
   const router = useRouter();
   const handleLogin = async (data: LoginType) => {
-    dispatch(loginUser(data));
-    router.push("/")
+    const result = await dispatch(loginUser(data));
+    if (loginUser.fulfilled.match(result)) {
+      router.push("/");
+    } else {
+      console.error("Login failed:", result);
+    }
   };
 
   const handleRegister = async (data: RegisterType) => {

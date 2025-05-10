@@ -48,7 +48,7 @@ export const register = createAsyncThunk(
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_SERVER_API}/register`,
-        data
+        { ...data, role: "TEACHER" }
       );
 
       return response.data.user as User;
